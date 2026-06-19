@@ -28,3 +28,6 @@ Thumbs.db
 .env
 .env.*
 !.env.example
+
+# Local asset-generation scratch (raw Higgsfield downloads; optimized webp live in public/)
+.asset-src

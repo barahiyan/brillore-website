@@ -9,6 +9,10 @@ export interface ServiceCategory {
   description: string;
   icon: string;
   items: string[];
+  /** Optional photographic visual. If absent, a decorative panel is shown. */
+  image?: string;
+  /** Neutral caption shown on the media panel (never a real-project claim). */
+  imageCaption?: string;
 }
 
 /** Three headline business areas shown on the Home page preview. */
@@ -44,6 +48,8 @@ export const serviceCategories: ServiceCategory[] = [
     description:
       "Accurate measurement, verification, and inspection support for petroleum-related operations and facilities.",
     icon: "Gauge",
+    image: "./assets/images/oil-gas.webp",
+    imageCaption: "Operational Environments",
     items: [
       "Oil flow measurements",
       "Bulk oil flow meter verification",
@@ -57,6 +63,8 @@ export const serviceCategories: ServiceCategory[] = [
     description:
       "Practical technical support for pipeline and asset reliability, helping clients maintain safer and more dependable operations.",
     icon: "Workflow",
+    image: "./assets/images/pipeline-integrity.webp",
+    imageCaption: "Technical Service Areas",
     items: [
       "Pipeline pigging",
       "Pipeline integrity support",
@@ -70,6 +78,8 @@ export const serviceCategories: ServiceCategory[] = [
     description:
       "Technical support services focused on improving safety, protection, and compliance for industrial and commercial environments.",
     icon: "Flame",
+    image: "./assets/images/fire-safety.webp",
+    imageCaption: "Service Capability Preview",
     items: [
       "Fire safety system support",
       "Safety-focused technical assistance",
@@ -82,6 +92,8 @@ export const serviceCategories: ServiceCategory[] = [
     description:
       "Professional technical support for marine-related operations, facilities, and service requirements.",
     icon: "Ship",
+    image: "./assets/images/marine.webp",
+    imageCaption: "Operational Environments",
     items: [
       "Marine technical support services",
       "Operational support for marine facilities",

@@ -4,6 +4,43 @@ The website ships complete with an SVG metrology gauge, gold lighting, and grid
 backdrops — **no images are required to launch.** Use these prompts to generate
 optional cinematic visuals that elevate the design later.
 
+---
+
+## ✅ Assets generated for this build (live in the site)
+
+Generated via the Higgsfield MCP, model **`gpt_image_2`** (GPT Image 2), quality
+`high`. Output webp placed in `public/assets/images/`. All verified: matte
+black / charcoal / metallic gold / steel, photorealistic, **no text, no logos, no
+labels**. Captioned with neutral wording (Operational Environments / Technical
+Service Areas / Service Capability Preview) — never as real completed projects.
+
+| File (`public/assets/images/`) | Slot | Aspect / res | Size |
+| ------------------------------ | ---- | ------------ | ---- |
+| `hero-terminal.webp`     | Home hero backdrop + video poster | 16:9 · 2k | ~243 KB |
+| `oil-gas.webp`           | Services → Oil & Gas Measurements | 3:2 · 1k  | ~42 KB |
+| `pipeline-integrity.webp`| Services → Pipeline & Asset Integrity | 3:2 · 1k | ~52 KB |
+| `fire-safety.webp`       | Services → Fire Safety Systems | 3:2 · 1k | ~51 KB |
+| `marine.webp`            | Services → Marine Services | 3:2 · 1k | ~64 KB |
+| `contact-abstract.webp`  | Contact hero backdrop | 16:9 · 2k | ~86 KB |
+
+**Exact prompts used**
+
+1. **hero-terminal** — "Ultra-realistic cinematic wide photograph of a premium oil and gas industrial terminal at dusk. Matte black and deep charcoal atmosphere with warm metallic gold rim lighting catching the edges of polished steel pipelines, valves, and a large flow-metering skid. Subtle steel and silver tones, soft volumetric haze, shallow depth of field, elegant reflections on dark wet ground. Professional corporate industrial photography, moody low-key lighting, trustworthy and high-end mood. No people in focus, no visible text, no logos, no signage, no labels. Photorealistic, high detail, realistic machinery, not futuristic, not sci-fi, no neon."
+2. **oil-gas** — "Ultra-realistic close-up photograph of a polished stainless-steel petroleum flow meter and valve manifold in a dark industrial oil terminal. Warm metallic gold rim lighting on the steel, deep charcoal and matte black background, subtle silver reflections, shallow depth of field, professional corporate industrial photography, clean precise and trustworthy mood. No people, no visible text, no logos, no labels, no readable numbers. Photorealistic, high detail, realistic, not futuristic, not sci-fi, no neon."
+3. **pipeline-integrity** — "Ultra-realistic photograph of industrial pipeline inspection: rows of large steel pipelines with flanges and bolts in a dark facility, a pipeline pig launcher, metallic gold accent lighting catching the steel edges, deep charcoal and matte black tones, moody low-key lighting, professional corporate industrial photography. No people in focus, no visible text, no logos, no labels. Photorealistic, high detail, realistic, not futuristic, not sci-fi, no neon."
+4. **fire-safety** — "Ultra-realistic photograph of an industrial fire safety system: deep red fire suppression valves, steel pipes and pressure manifolds in a clean dark technical room, warm metallic gold accent lighting, deep charcoal and matte black background, subtle steel and silver tones, professional corporate industrial photography, calm and controlled mood. No flames, no smoke, no people, no visible text, no logos, no labels. Photorealistic, high detail, realistic, not futuristic, not sci-fi, no neon."
+5. **marine** — "Ultra-realistic photograph of a marine vessel berthed beside an industrial oil terminal at dusk, dark calm water with elegant reflections, steel mooring and loading equipment, warm metallic gold rim lighting, deep charcoal and matte black atmosphere, subtle silver tones, distant blurred small figures in safety gear, professional corporate industrial photography, trustworthy premium mood. No visible text, no logos, no labels, no readable signage. Photorealistic, high detail, realistic, not futuristic, not sci-fi, no neon."
+6. **contact-abstract** — "Ultra-realistic premium abstract industrial background: extreme close-up of brushed steel and matte black surfaces with a single elegant sweep of warm metallic gold light, soft bokeh, deep charcoal tones, minimal sophisticated composition, subtle silver reflections, generous dark negative space. No people, no visible text, no logos, no labels, no machinery detail. Photorealistic, high detail, corporate and refined, not futuristic, not sci-fi, no neon."
+
+### Optional next step — hero video loop
+The hero is wired to accept a desktop video (with the webp above as poster +
+mobile fallback). To enable it: generate an 8s seamless loop (prompt #1 below in
+"Hero video loop"), export compressed `hero-loop.webm` + `hero-loop.mp4` into
+`public/assets/videos/`, then set `HERO_VIDEO_BASENAME = "./assets/videos/hero-loop"`
+in `src/components/home/Hero.tsx`. Mobile keeps the static webp for performance.
+
+---
+
 ## Brand constraints (apply to every prompt)
 
 - Palette: dark navy / near-black background, **gold / bronze / copper** accents.

@@ -1,5 +1,6 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import ThreeHeroObject from "../three/ThreeHeroObject";
 import { company } from "../../data/content";
@@ -15,12 +16,86 @@ const fade = {
   }),
 };
 
+/**
+ * Optional cinematic hero video (desktop only). Leave null to use the static
+ * webp backdrop (current liked design). To enable: drop hero-loop.webm + .mp4
+ * into public/assets/videos/ and set this to "./assets/videos/hero-loop".
+ * The webp below always remains the poster / mobile fallback.
+ */
+const HERO_VIDEO_BASENAME: string | null = null;
+
 export default function Hero() {
+  const ref = useRef<HTMLElement>(null);
+  const reduce = useReducedMotion();
+
+  // Scroll-driven depth: backdrop drifts + scales slightly; gauge counter-drifts.
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", reduce ? "0%" : "14%"]);
+  const bgScale = useTransform(scrollYProgress, [0, 1], [1.05, reduce ? 1.05 : 1.16]);
+  const visualY = useTransform(scrollYProgress, [0, 1], ["0%", reduce ? "0%" : "-8%"]);
+  const fadeOut = useTransform(scrollYProgress, [0, 0.85], [1, reduce ? 1 : 0.35]);
+
   return (
-    <section className="relative overflow-hidden pt-28 md:pt-36">
+    <section ref={ref} className="relative overflow-hidden pt-28 md:pt-36">
       {/* Background layers */}
-      <div aria-hidden className="pointer-events-none absolute inset-0">
+      <motion.div aria-hidden style={{ opacity: fadeOut }} className="pointer-events-none absolute inset-0">
+        {/* Cinematic industrial backdrop (parallax + depth), masked into matte black */}
+        <motion.div
+          style={{ y: bgY, scale: bgScale }}
+          className="absolute inset-0"
+        >
+          {HERO_VIDEO_BASENAME ? (
+            <video
+              className="absolute inset-0 hidden h-full w-full object-cover opacity-[0.22] md:block"
+              autoPlay
+              muted
+              loop
+              playsInline
+              poster="./assets/images/hero-terminal.webp"
+              style={{
+                maskImage: "radial-gradient(ellipse 85% 80% at 70% 35%,#000,transparent 75%)",
+                WebkitMaskImage: "radial-gradient(ellipse 85% 80% at 70% 35%,#000,transparent 75%)",
+              }}
+            >
+              <source src={`${HERO_VIDEO_BASENAME}.webm`} type="video/webm" />
+              <source src={`${HERO_VIDEO_BASENAME}.mp4`} type="video/mp4" />
+            </video>
+          ) : null}
+          {/* Static backdrop — always present (poster on desktop video, sole image on mobile) */}
+          <img
+            src="./assets/images/hero-terminal.webp"
+            alt=""
+            className={`absolute inset-0 h-full w-full object-cover opacity-[0.22] ${
+              HERO_VIDEO_BASENAME ? "md:hidden" : ""
+            }`}
+            style={{
+              maskImage: "radial-gradient(ellipse 85% 80% at 70% 35%,#000,transparent 75%)",
+              WebkitMaskImage: "radial-gradient(ellipse 85% 80% at 70% 35%,#000,transparent 75%)",
+            }}
+            decoding="async"
+          />
+        </motion.div>
+
+        <div className="absolute inset-0 bg-gradient-to-b from-ink-900/40 via-transparent to-ink-900" />
         <div className="absolute right-0 top-0 h-[600px] w-[600px] translate-x-1/4 rounded-full bg-radial-gold opacity-70 blur-2xl" />
+
+        {/* Soft gold light sweep */}
+        {!reduce && (
+          <motion.div
+            className="absolute inset-y-0 -left-1/3 w-1/3"
+            style={{
+              background:
+                "linear-gradient(105deg,transparent,rgba(214,168,79,0.10),transparent)",
+            }}
+            animate={{ x: ["0%", "420%"] }}
+            transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", repeatDelay: 3 }}
+          />
+        )}
+
+        {/* Technical grid */}
         <div
           className="absolute inset-0 opacity-[0.05]"
           style={{
@@ -30,7 +105,7 @@ export default function Hero() {
             maskImage: "radial-gradient(ellipse 80% 70% at 60% 10%,#000,transparent)",
           }}
         />
-      </div>
+      </motion.div>
 
       <div className="container-xl relative grid items-center gap-12 pb-16 lg:grid-cols-2 lg:gap-8 lg:pb-24">
         {/* Copy */}
@@ -95,14 +170,17 @@ export default function Hero() {
           </motion.ul>
         </div>
 
-        {/* Visual */}
+        {/* Visual (counter-parallax depth) */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
-          className="relative animate-floaty lg:pl-8"
+          style={{ y: visualY }}
+          className="relative lg:pl-8"
         >
-          <ThreeHeroObject />
+          <div className="animate-floaty">
+            <ThreeHeroObject />
+          </div>
         </motion.div>
       </div>
     </section>

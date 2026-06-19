@@ -11,6 +11,7 @@ export default function Contact() {
     <>
       <PageHero
         eyebrow="Contact"
+        bgImage="./assets/images/contact-abstract.webp"
         title={
           <>
             Let's Discuss Your <span className="text-gold-grad">Technical Service Needs</span>

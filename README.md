@@ -90,11 +90,21 @@ brillore-website/
 - **Logo:** `public/assets/logo/brilore-logo.png` is the **official logo** and is
   used exactly as provided. Only subtle CSS presentation effects (glow, light
   sweep, shadow) are layered around it — the image itself is never altered.
-- **Photography / video:** the site is intentionally complete without photos. To
-  add cinematic visuals, generate them with the prompts in
-  [`docs/higgsfield-prompts.md`](docs/higgsfield-prompts.md), optimize to `.webp`
-  (images) / `.webm` + `.mp4` (video), and place them in
-  `public/assets/images/placeholders/`.
+- **Photography (generated):** six cinematic visuals were generated with
+  Higgsfield (GPT Image 2) and live in **`public/assets/images/`** as optimized
+  `.webp`:
+  `hero-terminal` (home hero backdrop + video poster), `oil-gas`,
+  `pipeline-integrity`, `fire-safety`, `marine` (Services page blocks), and
+  `contact-abstract` (Contact hero backdrop). Each is ~40–250 KB and lazy-loaded
+  where below the fold.
+  **To replace any asset:** drop a new file with the same name into
+  `public/assets/images/` (keep `.webp`, similar aspect ratio) and rebuild — no
+  code change needed. Slot mapping + the exact prompts used are in
+  [`docs/higgsfield-prompts.md`](docs/higgsfield-prompts.md).
+- **Hero video (optional):** the hero accepts a desktop `.webm`/`.mp4` loop with
+  the webp as poster and a static webp on mobile. Add files to
+  `public/assets/videos/` and flip `HERO_VIDEO_BASENAME` in
+  [`src/components/home/Hero.tsx`](src/components/home/Hero.tsx). See the docs.
 
 ## 📨 Contact Form
 
