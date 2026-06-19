@@ -1,0 +1,133 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   Brillore Holdings — global design system
+   Dark industrial base, gold metallic accents.
+   ============================================================ */
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-ink-900 text-fog font-sans antialiased;
+    background-image:
+      radial-gradient(900px 500px at 80% -10%, rgba(214, 168, 79, 0.08), transparent 60%),
+      radial-gradient(700px 500px at -10% 20%, rgba(11, 17, 26, 0.9), transparent 60%);
+    background-attachment: fixed;
+  }
+
+  ::selection {
+    background: rgba(214, 168, 79, 0.28);
+    color: #fff;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-serif;
+    text-wrap: balance;
+  }
+
+  /* Visible keyboard focus for accessibility */
+  :focus-visible {
+    outline: 2px solid #d6a84f;
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: #05070b; }
+  ::-webkit-scrollbar-thumb {
+    background: #1d2733;
+    border-radius: 8px;
+    border: 2px solid #05070b;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: #B8892F; }
+}
+
+@layer components {
+  /* Section width container */
+  .container-xl {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8;
+  }
+
+  /* Small gold eyebrow label */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-label text-gold;
+  }
+  .eyebrow::before {
+    content: "";
+    @apply h-px w-8 bg-gold-grad;
+  }
+
+  /* Gradient gold text */
+  .text-gold-grad {
+    @apply bg-gold-grad bg-clip-text text-transparent;
+  }
+
+  /* Glass card */
+  .glass {
+    @apply rounded-2xl border border-line bg-white/[0.02] backdrop-blur-md;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 24px 60px -34px rgba(0, 0, 0, 0.9);
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 ease-out hover:-translate-y-1 hover:border-gold/40;
+  }
+  .card-hover:hover {
+    box-shadow: 0 30px 70px -30px rgba(0, 0, 0, 0.9), 0 0 0 1px rgba(214, 168, 79, 0.18),
+      0 0 50px -20px rgba(214, 168, 79, 0.45);
+  }
+
+  /* Buttons */
+  .btn {
+    @apply inline-flex select-none items-center justify-center gap-2 rounded-full px-6 py-3
+           text-sm font-semibold transition-all duration-300 ease-out;
+  }
+  .btn-primary {
+    @apply text-ink-900;
+    background-image: linear-gradient(135deg, #f4e7c5, #d6a84f 50%, #b8892f);
+    box-shadow: 0 10px 30px -10px rgba(214, 168, 79, 0.55);
+  }
+  .btn-primary:hover {
+    filter: brightness(1.06);
+    box-shadow: 0 14px 40px -10px rgba(214, 168, 79, 0.7);
+    transform: translateY(-1px);
+  }
+  .btn-ghost {
+    @apply border border-gold/45 text-gold-soft hover:bg-gold/10;
+  }
+  .btn-ghost:hover { transform: translateY(-1px); }
+
+  /* Hairline divider with gold center */
+  .divider-gold {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(214, 168, 79, 0.5), transparent);
+  }
+
+  /* Metallic top border accent used on cards */
+  .metal-top::before {
+    content: "";
+    @apply absolute inset-x-0 top-0 h-px;
+    background: linear-gradient(90deg, transparent, rgba(214, 168, 79, 0.7), transparent);
+  }
+}
+
+/* Respect reduced motion globally */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
