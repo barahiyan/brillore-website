@@ -25,7 +25,7 @@ export default function ServicesPipeline() {
       <SectionHeading
         eyebrow="How We Work"
         title="An interactive service pipeline"
-        subtitle="Every engagement flows through a clear, repeatable sequence — from first inquiry to long-term support."
+        subtitle="Every engagement flows through a clear, repeatable sequence, from first inquiry to long-term support."
         align="center"
       />
 

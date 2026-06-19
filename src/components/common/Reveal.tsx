@@ -9,15 +9,17 @@ interface RevealProps {
   as?: "div" | "li" | "span";
 }
 
-/** Fade-up on scroll into view. Respects reduced motion via Framer defaults + global CSS. */
-export default function Reveal({ children, delay = 0, y = 24, className, as = "div" }: RevealProps) {
+const ease = [0.22, 1, 0.36, 1] as const;
+
+/** Fade-up on scroll into view (GPU-cheap: opacity + transform only). */
+export default function Reveal({ children, delay = 0, y = 30, className, as = "div" }: RevealProps) {
   const MotionTag = motion[as];
   return (
     <MotionTag
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
+      viewport={{ once: true, margin: "-70px" }}
+      transition={{ duration: 0.7, delay, ease }}
       className={className}
     >
       {children}
@@ -28,10 +30,14 @@ export default function Reveal({ children, delay = 0, y = 24, className, as = "d
 /** Stagger container for grids of cards. */
 export const staggerParent = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.1 } },
+  show: { transition: { staggerChildren: 0.12, delayChildren: 0.05 } },
 };
 
 export const staggerItem = {
-  hidden: { opacity: 0, y: 26 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
+  hidden: { opacity: 0, y: 32 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.65, ease },
+  },
 };

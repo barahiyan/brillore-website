@@ -15,7 +15,7 @@ export default function ServicesOverview() {
       <SectionHeading
         eyebrow="Overview"
         title="Specialized technical services across critical sectors"
-        subtitle="Brillore Holdings provides technical services across oil and gas measurements, fire safety systems, marine services, and industrial inspection support — delivered with precision and clear reporting."
+        subtitle="Brillore Holdings provides technical services across oil and gas measurements, fire safety systems, marine services, and industrial inspection support, all delivered with precision and clear reporting."
       />
       <Reveal delay={0.1} className="mt-8 flex flex-wrap gap-3">
         {pills.map((p) => (

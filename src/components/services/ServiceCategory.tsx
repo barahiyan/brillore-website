@@ -18,7 +18,7 @@ export default function ServiceCategory({ category, index }: Props) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-90px" }}
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-      className="glass metal-top relative overflow-hidden"
+      className="glass metal-top group relative overflow-hidden"
       id={category.id}
     >
       <div className={`grid items-stretch md:grid-cols-2 ${reversed ? "md:[direction:rtl]" : ""}`}>
@@ -27,18 +27,18 @@ export default function ServiceCategory({ category, index }: Props) {
           {category.image ? (
             <img
               src={category.image}
-              alt={`${category.title} — industrial service environment`}
+              alt={`${category.title} industrial service environment`}
               loading="lazy"
               decoding="async"
-              className="absolute inset-0 h-full w-full object-cover"
+              className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-105"
             />
           ) : (
             <div className="absolute inset-0 bg-radial-gold opacity-40" />
           )}
-          {/* Matte-black gradient for legibility + brand mood */}
+          {/* Light gradient: keeps the photo clearly visible, only feathers the edge into the content */}
           <div
             aria-hidden
-            className="absolute inset-0 bg-gradient-to-t from-ink-900 via-ink-900/40 to-transparent md:bg-gradient-to-r"
+            className="absolute inset-0 bg-gradient-to-t from-ink-900/85 via-ink-900/10 to-transparent md:bg-gradient-to-r md:from-transparent md:via-transparent md:to-ink-900"
           />
           {/* Icon badge */}
           <span className="absolute left-6 top-6 grid h-14 w-14 place-items-center rounded-xl border border-gold/30 bg-ink-900/70 text-gold backdrop-blur-md">

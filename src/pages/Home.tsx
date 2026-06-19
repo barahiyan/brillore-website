@@ -1,4 +1,5 @@
 import Hero from "../components/home/Hero";
+import Marquee from "../components/common/Marquee";
 import AboutPreview from "../components/home/AboutPreview";
 import CoreBusinessPreview from "../components/home/CoreBusinessPreview";
 import WhyChoosePreview from "../components/home/WhyChoosePreview";
@@ -10,6 +11,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <Marquee />
       <AboutPreview />
       <CoreBusinessPreview />
       <WhyChoosePreview />

@@ -3,145 +3,175 @@ import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import ThreeHeroObject from "../three/ThreeHeroObject";
+import AnimatedCounter from "../common/AnimatedCounter";
 import { company } from "../../data/content";
 
-const trustItems = ["Metrology", "Inspection", "Technical Services", `Since ${company.since}`, company.iso];
+/**
+ * Optional cinematic hero video (desktop only). Set to null to use only the
+ * static webp backdrop. The webp always remains the poster / mobile fallback.
+ * HERO_VIDEO_FORMATS lists the files present in public/assets/videos/.
+ */
+const HERO_VIDEO_BASENAME: string | null = null;
+const HERO_VIDEO_FORMATS: Array<"webm" | "mp4"> = ["mp4"];
 
-const fade = {
-  hidden: { opacity: 0, y: 24 },
+type Word = { t: string; gold?: boolean };
+const headlineLines: Word[][] = [
+  [{ t: "Precision," }, { t: "Compliance" }],
+  [{ t: "&" }, { t: "Reliability" }, { t: "for" }],
+  [{ t: "Critical Industrial Operations", gold: true }],
+];
+
+const ease = [0.22, 1, 0.36, 1] as const;
+
+const lineReveal = {
+  hidden: { opacity: 0, y: 30, filter: "blur(8px)" },
   show: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.7, delay: 0.15 + i * 0.12, ease: [0.22, 1, 0.36, 1] },
+    filter: "blur(0px)",
+    transition: { duration: 0.8, delay: 0.25 + i * 0.12, ease },
   }),
 };
 
-/**
- * Optional cinematic hero video (desktop only). Leave null to use the static
- * webp backdrop (current liked design). To enable: drop hero-loop.webm + .mp4
- * into public/assets/videos/ and set this to "./assets/videos/hero-loop".
- * The webp below always remains the poster / mobile fallback.
- */
-const HERO_VIDEO_BASENAME: string | null = null;
+const fade = {
+  hidden: { opacity: 0, y: 20 },
+  show: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, delay: 0.55 + i * 0.12, ease },
+  }),
+};
+
+type Stat =
+  | { value: number; suffix: string; label: string }
+  | { text: string; label: string };
+const stats: Stat[] = [
+  { value: 5, suffix: "+", label: "Years of operation" },
+  { value: 3, suffix: "", label: "Core disciplines" },
+  { text: company.iso, label: "Quality certified" },
+];
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
 
-  // Scroll-driven depth: backdrop drifts + scales slightly; gauge counter-drifts.
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
-  });
-  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", reduce ? "0%" : "14%"]);
-  const bgScale = useTransform(scrollYProgress, [0, 1], [1.05, reduce ? 1.05 : 1.16]);
-  const visualY = useTransform(scrollYProgress, [0, 1], ["0%", reduce ? "0%" : "-8%"]);
-  const fadeOut = useTransform(scrollYProgress, [0, 0.85], [1, reduce ? 1 : 0.35]);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", reduce ? "0%" : "16%"]);
+  const bgScale = useTransform(scrollYProgress, [0, 1], [1.06, reduce ? 1.06 : 1.18]);
+  const visualY = useTransform(scrollYProgress, [0, 1], ["0%", reduce ? "0%" : "-10%"]);
+  const fadeOut = useTransform(scrollYProgress, [0, 0.9], [1, reduce ? 1 : 0.4]);
 
   return (
     <section ref={ref} className="relative overflow-hidden pt-28 md:pt-36">
       {/* Background layers */}
       <motion.div aria-hidden style={{ opacity: fadeOut }} className="pointer-events-none absolute inset-0">
-        {/* Cinematic industrial backdrop (parallax + depth), masked into matte black */}
-        <motion.div
-          style={{ y: bgY, scale: bgScale }}
-          className="absolute inset-0"
-        >
+        {/* Cinematic industrial backdrop — kept clearly visible on the right, fading into matte black on the left */}
+        <motion.div style={{ y: bgY, scale: bgScale }} className="absolute inset-0">
           {HERO_VIDEO_BASENAME ? (
             <video
-              className="absolute inset-0 hidden h-full w-full object-cover opacity-[0.22] md:block"
+              className="absolute inset-0 hidden h-full w-full object-cover opacity-40 md:block"
               autoPlay
               muted
               loop
               playsInline
               poster="./assets/images/hero-terminal.webp"
               style={{
-                maskImage: "radial-gradient(ellipse 85% 80% at 70% 35%,#000,transparent 75%)",
-                WebkitMaskImage: "radial-gradient(ellipse 85% 80% at 70% 35%,#000,transparent 75%)",
+                maskImage: "linear-gradient(90deg,transparent,#000 42%,#000 100%)",
+                WebkitMaskImage: "linear-gradient(90deg,transparent,#000 42%,#000 100%)",
               }}
             >
-              <source src={`${HERO_VIDEO_BASENAME}.webm`} type="video/webm" />
-              <source src={`${HERO_VIDEO_BASENAME}.mp4`} type="video/mp4" />
+              {HERO_VIDEO_FORMATS.map((f) => (
+                <source key={f} src={`${HERO_VIDEO_BASENAME}.${f}`} type={`video/${f}`} />
+              ))}
             </video>
           ) : null}
-          {/* Static backdrop — always present (poster on desktop video, sole image on mobile) */}
           <img
             src="./assets/images/hero-terminal.webp"
             alt=""
-            className={`absolute inset-0 h-full w-full object-cover opacity-[0.22] ${
+            className={`absolute inset-0 h-full w-full object-cover opacity-40 ${
               HERO_VIDEO_BASENAME ? "md:hidden" : ""
             }`}
             style={{
-              maskImage: "radial-gradient(ellipse 85% 80% at 70% 35%,#000,transparent 75%)",
-              WebkitMaskImage: "radial-gradient(ellipse 85% 80% at 70% 35%,#000,transparent 75%)",
+              maskImage: "linear-gradient(90deg,transparent 2%,#000 46%,#000 100%)",
+              WebkitMaskImage: "linear-gradient(90deg,transparent 2%,#000 46%,#000 100%)",
             }}
             decoding="async"
           />
         </motion.div>
 
-        <div className="absolute inset-0 bg-gradient-to-b from-ink-900/40 via-transparent to-ink-900" />
-        <div className="absolute right-0 top-0 h-[600px] w-[600px] translate-x-1/4 rounded-full bg-radial-gold opacity-70 blur-2xl" />
+        {/* Cinematic vignette + matte-black base so text stays crisp on the left */}
+        <div className="absolute inset-0 bg-gradient-to-r from-ink-900 via-ink-900/70 to-ink-900/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink-900 via-transparent to-ink-900/60" />
+        <div className="absolute right-0 top-0 h-[640px] w-[640px] translate-x-1/4 rounded-full bg-radial-gold opacity-60 blur-2xl" />
 
         {/* Soft gold light sweep */}
         {!reduce && (
           <motion.div
             className="absolute inset-y-0 -left-1/3 w-1/3"
-            style={{
-              background:
-                "linear-gradient(105deg,transparent,rgba(214,168,79,0.10),transparent)",
-            }}
-            animate={{ x: ["0%", "420%"] }}
+            style={{ background: "linear-gradient(105deg,transparent,rgba(214,168,79,0.10),transparent)" }}
+            animate={{ x: ["0%", "460%"] }}
             transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", repeatDelay: 3 }}
           />
         )}
-
-        {/* Technical grid */}
-        <div
-          className="absolute inset-0 opacity-[0.05]"
-          style={{
-            backgroundImage:
-              "linear-gradient(#d6a84f 1px,transparent 1px),linear-gradient(90deg,#d6a84f 1px,transparent 1px)",
-            backgroundSize: "72px 72px",
-            maskImage: "radial-gradient(ellipse 80% 70% at 60% 10%,#000,transparent)",
-          }}
-        />
       </motion.div>
 
-      <div className="container-xl relative grid items-center gap-12 pb-16 lg:grid-cols-2 lg:gap-8 lg:pb-24">
+      <div className="container-xl relative grid items-center gap-10 pb-20 lg:grid-cols-12 lg:gap-6 lg:pb-28">
         {/* Copy */}
-        <div>
-          <motion.span custom={0} variants={fade} initial="hidden" animate="show" className="eyebrow">
-            {company.category}
-          </motion.span>
+        <div className="lg:col-span-7 lg:pr-8">
+          {/* Credential pill */}
+          <motion.div
+            custom={0}
+            variants={fade}
+            initial="hidden"
+            animate="show"
+            className="inline-flex items-center gap-2.5 rounded-full border border-line bg-white/[0.03] px-4 py-1.5 backdrop-blur-md"
+          >
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold/60" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-gold" />
+            </span>
+            <span className="text-[11px] font-medium uppercase tracking-[0.2em] text-fog/80">
+              {company.category}
+            </span>
+          </motion.div>
 
-          <motion.h1
+          <h1 className="mt-6 font-serif text-[2.7rem] font-semibold leading-[1.04] tracking-tight text-fog sm:text-6xl lg:text-[4.2rem]">
+            {headlineLines.map((line, i) => (
+              <motion.span
+                key={i}
+                custom={i}
+                variants={lineReveal}
+                initial="hidden"
+                animate="show"
+                className="block"
+              >
+                {line.map((w, j) => (
+                  <span key={j} className={w.gold ? "text-gold-grad" : ""}>
+                    {w.t}
+                    {j < line.length - 1 ? " " : ""}
+                  </span>
+                ))}
+              </motion.span>
+            ))}
+          </h1>
+
+          <motion.p
             custom={1}
             variants={fade}
             initial="hidden"
             animate="show"
-            className="mt-5 text-4xl font-semibold leading-[1.06] text-fog sm:text-5xl md:text-6xl"
+            className="mt-6 max-w-md text-lg leading-relaxed text-muted"
           >
-            Precision, Compliance &amp; Reliability for{" "}
-            <span className="text-gold-grad">Critical Industrial Operations</span>
-          </motion.h1>
+            Dependable measurement, inspection, and safety services for oil, gas, industrial, and
+            marine operations.
+          </motion.p>
 
-          <motion.p
+          <motion.div
             custom={2}
             variants={fade}
             initial="hidden"
             animate="show"
-            className="mt-6 max-w-xl text-lg leading-relaxed text-muted"
-          >
-            Brillore Holdings delivers dependable metrology, inspection, fire safety, and marine
-            technical support services for oil, gas, industrial, and marine operations.
-          </motion.p>
-
-          <motion.div
-            custom={3}
-            variants={fade}
-            initial="hidden"
-            animate="show"
-            className="mt-9 flex flex-wrap gap-4"
+            className="mt-8 flex flex-wrap gap-4"
           >
             <Link to="/services" className="btn btn-primary">
               Explore Services
@@ -153,30 +183,32 @@ export default function Hero() {
             </Link>
           </motion.div>
 
-          {/* Trust indicators */}
-          <motion.ul
-            custom={4}
+          {/* Animated stat strip (replaces generic dot row) */}
+          <motion.dl
+            custom={3}
             variants={fade}
             initial="hidden"
             animate="show"
-            className="mt-12 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-line pt-6"
+            className="mt-12 grid max-w-lg grid-cols-3 gap-px overflow-hidden rounded-2xl border border-line bg-line"
           >
-            {trustItems.map((t) => (
-              <li key={t} className="flex items-center gap-2 text-xs font-medium uppercase tracking-wider text-muted">
-                <span className="h-1.5 w-1.5 rounded-full bg-gold" />
-                {t}
-              </li>
+            {stats.map((s) => (
+              <div key={s.label} className="bg-ink-900/80 px-4 py-4 backdrop-blur-sm">
+                <dd className="font-serif text-2xl font-semibold text-gold-grad sm:text-3xl">
+                  {"value" in s ? <AnimatedCounter value={s.value} suffix={s.suffix} /> : s.text}
+                </dd>
+                <dt className="mt-1 text-[11px] leading-tight text-muted">{s.label}</dt>
+              </div>
             ))}
-          </motion.ul>
+          </motion.dl>
         </div>
 
-        {/* Visual (counter-parallax depth) */}
+        {/* Visual */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 1.1, delay: 0.3, ease }}
           style={{ y: visualY }}
-          className="relative lg:pl-8"
+          className="relative lg:col-span-5"
         >
           <div className="animate-floaty">
             <ThreeHeroObject />

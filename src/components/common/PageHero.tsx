@@ -20,12 +20,12 @@ export default function PageHero({ eyebrow, title, subtitle, children, bgImage }
           <img
             src={bgImage}
             alt=""
-            className="h-full w-full object-cover opacity-25"
-            style={{ maskImage: "radial-gradient(ellipse 80% 75% at 50% 30%,#000,transparent 75%)", WebkitMaskImage: "radial-gradient(ellipse 80% 75% at 50% 30%,#000,transparent 75%)" }}
+            className="h-full w-full object-cover opacity-[0.45]"
+            style={{ maskImage: "radial-gradient(ellipse 90% 85% at 60% 25%,#000,transparent 80%)", WebkitMaskImage: "radial-gradient(ellipse 90% 85% at 60% 25%,#000,transparent 80%)" }}
             loading="eager"
             decoding="async"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-ink-900/40 via-ink-900/20 to-ink-900" />
+          <div className="absolute inset-0 bg-gradient-to-b from-ink-900/20 via-ink-900/10 to-ink-900" />
         </div>
       )}
       {/* Radial glow + grid backdrop */}

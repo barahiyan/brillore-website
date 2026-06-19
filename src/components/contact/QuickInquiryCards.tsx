@@ -24,7 +24,7 @@ export default function QuickInquiryCards() {
       <SectionHeading
         eyebrow="Quick Inquiries"
         title="Start with the service you need"
-        subtitle="Pick a topic to open a pre-filled email — or use the form for a detailed request."
+        subtitle="Pick a topic to open a pre-filled email, or use the form for a detailed request."
         align="center"
       />
 

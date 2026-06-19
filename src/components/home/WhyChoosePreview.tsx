@@ -20,7 +20,7 @@ export default function WhyChoosePreview() {
           <SectionHeading
             eyebrow="Why Choose Brillore"
             title="Dependable results, clearly reported"
-            subtitle="We pair technical accuracy with practical delivery — so you get measurements you can trust and reports you can act on."
+            subtitle="We pair technical accuracy with practical delivery, so you get measurements you can trust and reports you can act on."
           />
 
           <div className="mt-10 grid grid-cols-3 gap-4">

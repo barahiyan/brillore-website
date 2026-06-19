@@ -52,12 +52,12 @@ export default function ContactForm() {
     e.preventDefault();
     if (!validate()) return;
 
-    const subject = `Service Inquiry: ${form.interest} — ${form.name}`;
+    const subject = `Service Inquiry: ${form.interest} (${form.name})`;
     const body = [
       `Name: ${form.name}`,
-      `Company: ${form.companyName || "—"}`,
+      `Company: ${form.companyName || "Not provided"}`,
       `Email: ${form.email}`,
-      `Phone: ${form.phone || "—"}`,
+      `Phone: ${form.phone || "Not provided"}`,
       `Service interest: ${form.interest}`,
       "",
       "Message:",
