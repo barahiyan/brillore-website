@@ -19,8 +19,9 @@
   body {
     @apply bg-ink-900 text-fog font-sans antialiased;
     background-image:
-      radial-gradient(900px 500px at 80% -10%, rgba(214, 168, 79, 0.08), transparent 60%),
-      radial-gradient(700px 500px at -10% 20%, rgba(11, 17, 26, 0.9), transparent 60%);
+      radial-gradient(900px 520px at 82% -12%, rgba(214, 168, 79, 0.07), transparent 60%),
+      radial-gradient(760px 520px at -12% 18%, rgba(24, 26, 28, 0.95), transparent 62%),
+      linear-gradient(180deg, #050505 0%, #090a0a 100%);
     background-attachment: fixed;
   }
 
@@ -43,11 +44,11 @@
 
   /* Custom scrollbar */
   ::-webkit-scrollbar { width: 10px; }
-  ::-webkit-scrollbar-track { background: #05070b; }
+  ::-webkit-scrollbar-track { background: #050505; }
   ::-webkit-scrollbar-thumb {
-    background: #1d2733;
+    background: #26282c;
     border-radius: 8px;
-    border: 2px solid #05070b;
+    border: 2px solid #050505;
   }
   ::-webkit-scrollbar-thumb:hover { background: #B8892F; }
 }
@@ -86,25 +87,62 @@
       0 0 50px -20px rgba(214, 168, 79, 0.45);
   }
 
-  /* Buttons */
+  /* ---- Premium metallic-glass buttons ----
+     Dark metallic base, thin gold border, inner highlight, light-sweep on hover.
+     Not flat gold. */
   .btn {
-    @apply inline-flex select-none items-center justify-center gap-2 rounded-full px-6 py-3
-           text-sm font-semibold transition-all duration-300 ease-out;
+    @apply relative isolate inline-flex select-none items-center justify-center gap-2
+           overflow-hidden rounded-full px-6 py-3 text-sm font-semibold
+           transition-all duration-300 ease-out;
   }
+
+  /* Glossy light sweep used by both variants.
+     z-index:-1 keeps it above the button base but below the label/icon. */
+  .btn::after {
+    content: "";
+    @apply pointer-events-none absolute inset-y-0 left-0 w-2/3;
+    z-index: -1;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.22), transparent);
+    transform: translateX(-180%) skewX(-15deg);
+    transition: transform 0.8s ease;
+  }
+  .btn:hover::after {
+    transform: translateX(320%) skewX(-15deg);
+  }
+
   .btn-primary {
-    @apply text-ink-900;
-    background-image: linear-gradient(135deg, #f4e7c5, #d6a84f 50%, #b8892f);
-    box-shadow: 0 10px 30px -10px rgba(214, 168, 79, 0.55);
+    color: #f4e7c5;
+    background:
+      linear-gradient(135deg, rgba(214, 168, 79, 0.2), rgba(9, 10, 10, 0.95) 45%, rgba(184, 137, 47, 0.24));
+    border: 1px solid rgba(214, 168, 79, 0.65);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      0 12px 30px rgba(0, 0, 0, 0.35),
+      0 0 22px rgba(214, 168, 79, 0.12);
+    backdrop-filter: blur(12px);
   }
   .btn-primary:hover {
-    filter: brightness(1.06);
-    box-shadow: 0 14px 40px -10px rgba(214, 168, 79, 0.7);
-    transform: translateY(-1px);
+    border-color: rgba(244, 231, 197, 0.9);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.16),
+      0 16px 40px rgba(0, 0, 0, 0.45),
+      0 0 32px rgba(214, 168, 79, 0.22);
+    transform: translateY(-2px);
   }
+
   .btn-ghost {
-    @apply border border-gold/45 text-gold-soft hover:bg-gold/10;
+    color: #e8e8e8;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(214, 168, 79, 0.32);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(8px);
   }
-  .btn-ghost:hover { transform: translateY(-1px); }
+  .btn-ghost:hover {
+    color: #f4e7c5;
+    border-color: rgba(214, 168, 79, 0.6);
+    background: rgba(214, 168, 79, 0.08);
+    transform: translateY(-2px);
+  }
 
   /* Hairline divider with gold center */
   .divider-gold {

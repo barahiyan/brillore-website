@@ -33,15 +33,15 @@ export default function ThreeHeroObject() {
               <stop offset="100%" stopColor="#B8892F" />
             </linearGradient>
             <radialGradient id="dial" cx="50%" cy="42%" r="65%">
-              <stop offset="0%" stopColor="#16202B" />
-              <stop offset="70%" stopColor="#0B111A" />
-              <stop offset="100%" stopColor="#05070B" />
+              <stop offset="0%" stopColor="#1b1d20" />
+              <stop offset="70%" stopColor="#0d0e10" />
+              <stop offset="100%" stopColor="#050505" />
             </radialGradient>
           </defs>
 
           {/* Outer ring */}
           <circle cx="200" cy="200" r="190" fill="none" stroke="url(#gold)" strokeWidth="2" opacity="0.55" />
-          <circle cx="200" cy="200" r="176" fill="none" stroke="#1d2733" strokeWidth="10" />
+          <circle cx="200" cy="200" r="176" fill="none" stroke="#26282c" strokeWidth="10" />
           <circle cx="200" cy="200" r="176" fill="none" stroke="url(#gold)" strokeWidth="1" opacity="0.4" />
 
           {/* Tick marks */}
@@ -61,7 +61,7 @@ export default function ThreeHeroObject() {
                 y1={y1}
                 x2={x2}
                 y2={y2}
-                stroke={major ? "#D6A84F" : "#3a4654"}
+                stroke={major ? "#D6A84F" : "#44474c"}
                 strokeWidth={major ? 2 : 1}
                 opacity={major ? 0.9 : 0.6}
               />
@@ -73,7 +73,7 @@ export default function ThreeHeroObject() {
       {/* Inner dial face (static) */}
       <div className="absolute inset-[18%] grid place-items-center">
         <svg viewBox="0 0 280 280" className="h-full w-full">
-          <circle cx="140" cy="140" r="138" fill="url(#dial)" stroke="#2a3441" strokeWidth="1.5" />
+          <circle cx="140" cy="140" r="138" fill="url(#dial)" stroke="#2c2e32" strokeWidth="1.5" />
           {/* Concentric measurement arcs */}
           <circle cx="140" cy="140" r="108" fill="none" stroke="#D6A84F" strokeWidth="1" opacity="0.25" strokeDasharray="2 6" />
           <path
@@ -85,8 +85,8 @@ export default function ThreeHeroObject() {
             opacity="0.85"
           />
           {/* Crosshair, echoing the logo target motif */}
-          <line x1="140" y1="92" x2="140" y2="188" stroke="#3a4654" strokeWidth="1" />
-          <line x1="92" y1="140" x2="188" y2="140" stroke="#3a4654" strokeWidth="1" />
+          <line x1="140" y1="92" x2="140" y2="188" stroke="#44474c" strokeWidth="1" />
+          <line x1="92" y1="140" x2="188" y2="140" stroke="#44474c" strokeWidth="1" />
           <circle cx="140" cy="140" r="6" fill="url(#gold)" />
         </svg>
       </div>

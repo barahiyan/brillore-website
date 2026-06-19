@@ -9,20 +9,24 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // Matte black / charcoal base (per Brillore identity system).
         ink: {
-          900: "#05070B", // near black
-          800: "#0B111A", // dark navy
-          700: "#101820", // deep charcoal
-          600: "#161F2A",
+          900: "#050505", // matte black
+          800: "#090A0A", // near black
+          700: "#111315", // charcoal
+          600: "#181A1C", // raised charcoal
         },
         gold: {
           DEFAULT: "#D6A84F",
-          soft: "#F4E7C5",
+          soft: "#E0BF75", // light gold (text on dark buttons)
+          deep: "#C99A3D",
           bronze: "#B8892F",
         },
         line: "rgba(214,168,79,0.18)",
-        muted: "#8A8F98",
-        fog: "#EAEAEA",
+        silver: "#E8E8E8",
+        muted: "#9A9A9A", // neutral grey (no blue cast)
+        cream: "#F4F0E8", // warm white
+        fog: "#E8E8E8",
       },
       fontFamily: {
         serif: ['"Cormorant Garamond"', "Georgia", "serif"],
@@ -32,7 +36,7 @@ const config: Config = {
         label: "0.28em",
       },
       backgroundImage: {
-        "gold-grad": "linear-gradient(135deg,#F4E7C5 0%,#D6A84F 45%,#B8892F 100%)",
+        "gold-grad": "linear-gradient(135deg,#E0BF75 0%,#D6A84F 45%,#B8892F 100%)",
         "radial-gold":
           "radial-gradient(circle at center,rgba(214,168,79,0.16),transparent 70%)",
       },
