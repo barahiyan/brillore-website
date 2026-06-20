@@ -23,7 +23,7 @@ export default function IndustriesPreview() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-80px" }}
-          className="mx-auto mt-14 grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-3"
+          className="mx-auto mt-14 flex max-w-5xl flex-wrap items-stretch justify-center gap-4"
         >
           {industries.map((ind) => (
             <IndustryCard key={ind.name} name={ind.name} icon={ind.icon} />

@@ -41,7 +41,7 @@ const config: Config = {
           "radial-gradient(circle at center,rgba(214,168,79,0.16),transparent 70%)",
       },
       boxShadow: {
-        gold: "0 0 40px -12px rgba(214,168,79,0.45)",
+        gold: "0 0 34px -16px rgba(214,168,79,0.24)",
         card: "0 24px 60px -30px rgba(0,0,0,0.85)",
       },
       keyframes: {

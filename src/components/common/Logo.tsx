@@ -20,7 +20,7 @@ export default function Logo({ className = "h-10 w-10", glow = false }: LogoProp
       <img
         src="./assets/logo/brilore-logo.png"
         alt="Brillore Holdings logo"
-        className="relative h-full w-full object-contain drop-shadow-[0_4px_14px_rgba(214,168,79,0.35)]"
+        className="relative h-full w-full object-contain drop-shadow-[0_4px_12px_rgba(214,168,79,0.2)]"
         decoding="async"
       />
     </span>
