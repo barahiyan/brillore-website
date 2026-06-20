@@ -4,6 +4,7 @@ import ServicesOverview from "../components/services/ServicesOverview";
 import ServiceCategory from "../components/services/ServiceCategory";
 import ServicesPipeline from "../components/services/ServicesPipeline";
 import ServiceProcess from "../components/services/ServiceProcess";
+import ParallaxBand from "../components/common/ParallaxBand";
 import CTASection from "../components/common/CTASection";
 import { serviceCategories } from "../data/services";
 
@@ -29,6 +30,15 @@ export default function Services() {
           <ServiceCategory key={cat.id} category={cat} index={i} />
         ))}
       </section>
+
+      <ParallaxBand
+        image="./assets/images/fire-safety.webp"
+        eyebrow="Safety First"
+        title="Compliance and safety, engineered into every service"
+        subtitle="From fire safety systems to inspection reporting, our work is built around protecting people, assets, and operational continuity."
+        caption="Service Capability Preview"
+        align="center"
+      />
 
       <ServicesPipeline />
       <ServiceProcess />
