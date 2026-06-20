@@ -25,7 +25,7 @@ export default function SectionHeading({
         {title}
       </h2>
       {subtitle && (
-        <p className={`max-w-2xl text-base leading-relaxed text-muted ${center ? "mx-auto" : ""}`}>
+        <p className={`max-w-[58ch] text-base leading-relaxed text-muted ${center ? "mx-auto" : ""}`}>
           {subtitle}
         </p>
       )}

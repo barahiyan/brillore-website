@@ -22,9 +22,10 @@ export default function CoreBusinessPreview() {
           viewport={{ once: true, margin: "-80px" }}
           className="mt-14 grid gap-6 md:grid-cols-3"
         >
-          {coreBusiness.map((c) => (
+          {coreBusiness.map((c, i) => (
             <ServiceCard
               key={c.id}
+              index={String(i + 1).padStart(2, "0")}
               icon={c.icon}
               title={c.title}
               description={c.description}

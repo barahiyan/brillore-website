@@ -130,7 +130,7 @@ export default function Hero() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold/60" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-gold" />
             </span>
-            <span className="text-[11px] font-medium uppercase tracking-[0.2em] text-fog/80">
+            <span className="text-xs font-medium tracking-wide text-fog/80">
               {company.category}
             </span>
           </motion.div>

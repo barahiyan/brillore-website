@@ -16,7 +16,7 @@ export default function Services() {
         title={
           <>
             Technical Services Built for{" "}
-            <span className="text-gold-grad">Accuracy, Safety &amp; Compliance</span>
+            <span className="text-gold-soft">Accuracy, Safety &amp; Compliance</span>
           </>
         }
         subtitle="From petroleum measurement to inspection support, Brillore Holdings helps industrial, oil and gas, fire safety, and marine clients improve operational reliability."

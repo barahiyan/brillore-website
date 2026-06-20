@@ -27,7 +27,7 @@ export default function Footer() {
 
         {/* Quick links */}
         <div className="md:col-span-3">
-          <h4 className="text-sm font-semibold uppercase tracking-widest text-fog/90">Navigate</h4>
+          <h3 className="text-sm font-semibold uppercase tracking-widest text-fog/90">Navigate</h3>
           <ul className="mt-5 space-y-3">
             {navLinks.map((l) => (
               <li key={l.to}>
@@ -46,7 +46,7 @@ export default function Footer() {
 
         {/* Contact */}
         <div className="md:col-span-4">
-          <h4 className="text-sm font-semibold uppercase tracking-widest text-fog/90">Contact</h4>
+          <h3 className="text-sm font-semibold uppercase tracking-widest text-fog/90">Contact</h3>
           <ul className="mt-5 space-y-4 text-sm">
             <li>
               <a href={company.phoneHref} className="flex items-center gap-3 text-muted hover:text-gold">
@@ -80,7 +80,7 @@ export default function Footer() {
         <p>
           © {year} {company.name}. All rights reserved.
         </p>
-        <p className="uppercase tracking-widest">
+        <p className="tracking-wide">
           {company.category} · Since {company.since}
         </p>
       </div>

@@ -26,7 +26,7 @@ export default function WhyChoosePreview() {
           <div className="mt-10 grid grid-cols-3 gap-4">
             {stats.map((s) => (
               <Reveal key={s.label} className="glass metal-top relative overflow-hidden p-4 text-center">
-                <div className="font-serif text-3xl font-semibold text-gold-grad">
+                <div className="font-serif text-3xl font-semibold text-gold-soft">
                   <AnimatedCounter value={s.value} suffix={s.suffix} />
                 </div>
                 <p className="mt-1 text-[11px] leading-tight text-muted">{s.label}</p>

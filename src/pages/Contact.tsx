@@ -14,7 +14,7 @@ export default function Contact() {
         bgImage="./assets/images/contact-abstract.webp"
         title={
           <>
-            Let's Discuss Your <span className="text-gold-grad">Technical Service Needs</span>
+            Let's Discuss Your <span className="text-gold-soft">Technical Service Needs</span>
           </>
         }
         subtitle="Contact Brillore Holdings for metrology, inspection, fire safety, and marine technical support services."

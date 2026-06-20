@@ -30,7 +30,7 @@ const config: Config = {
       },
       fontFamily: {
         serif: ['"Cormorant Garamond"', "Georgia", "serif"],
-        sans: ['"Inter"', "system-ui", "-apple-system", "sans-serif"],
+        sans: ['"Archivo"', "system-ui", "-apple-system", "sans-serif"],
       },
       letterSpacing: {
         label: "0.28em",

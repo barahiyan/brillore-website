@@ -10,17 +10,27 @@ interface ServiceCardProps {
   description: string;
   to?: string;
   cta?: string;
+  /** Editorial index, e.g. "01". */
+  index?: string;
 }
 
-export default function ServiceCard({ icon, title, description, to, cta }: ServiceCardProps) {
+export default function ServiceCard({ icon, title, description, to, cta, index }: ServiceCardProps) {
   const inner = (
     <motion.div
       variants={staggerItem}
       className="glass card-hover metal-top group relative flex h-full flex-col overflow-hidden p-7"
     >
-      <span className="grid h-14 w-14 place-items-center rounded-xl border border-gold/25 bg-gold/5 text-gold transition-colors group-hover:bg-gold/10">
-        <Icon name={icon} className="h-7 w-7" />
-      </span>
+      {/* Editorial header row: index + icon + rule (no generic square tile) */}
+      <div className="flex items-center gap-4">
+        {index && (
+          <span className="font-serif text-3xl font-semibold leading-none text-white/[0.14]">
+            {index}
+          </span>
+        )}
+        <span className="h-px flex-1 bg-gradient-to-r from-gold/45 to-transparent" />
+        <Icon name={icon} className="h-8 w-8 text-gold transition-transform group-hover:-translate-y-0.5" />
+      </div>
+
       <h3 className="mt-6 text-xl font-semibold text-fog">{title}</h3>
       <p className="mt-3 flex-1 text-sm leading-relaxed text-muted">{description}</p>
       {cta && (

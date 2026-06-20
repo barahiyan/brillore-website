@@ -28,7 +28,7 @@ export default function ServiceProcess() {
               variants={staggerItem}
               className="glass card-hover metal-top relative overflow-hidden p-6"
             >
-              <span className="font-serif text-4xl font-semibold text-gold-grad">{p.step}</span>
+              <span className="font-serif text-4xl font-semibold text-gold-soft">{p.step}</span>
               <h3 className="mt-3 text-base font-semibold text-fog">{p.title}</h3>
               <p className="mt-1.5 text-sm leading-relaxed text-muted">{p.text}</p>
             </motion.li>
