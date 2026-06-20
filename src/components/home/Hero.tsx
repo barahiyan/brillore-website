@@ -192,11 +192,11 @@ export default function Hero() {
             className="mt-12 grid max-w-lg grid-cols-3 gap-px overflow-hidden rounded-2xl border border-line bg-line"
           >
             {stats.map((s) => (
-              <div key={s.label} className="bg-ink-900/80 px-4 py-4 backdrop-blur-sm">
-                <dd className="font-serif text-2xl font-semibold text-gold-grad sm:text-3xl">
+              <div key={s.label} className="bg-ink-800/95 px-4 py-4">
+                <dd className="font-serif text-2xl font-semibold text-gold-soft sm:text-3xl">
                   {"value" in s ? <AnimatedCounter value={s.value} suffix={s.suffix} /> : s.text}
                 </dd>
-                <dt className="mt-1 text-[11px] leading-tight text-muted">{s.label}</dt>
+                <dt className="mt-1 text-[11px] leading-tight text-fog/70">{s.label}</dt>
               </div>
             ))}
           </motion.dl>
