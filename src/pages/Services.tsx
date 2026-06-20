@@ -3,7 +3,6 @@ import PageHero from "../components/common/PageHero";
 import ServicesOverview from "../components/services/ServicesOverview";
 import ServiceCategory from "../components/services/ServiceCategory";
 import ServicesPipeline from "../components/services/ServicesPipeline";
-import ServiceProcess from "../components/services/ServiceProcess";
 import ParallaxBand from "../components/common/ParallaxBand";
 import CTASection from "../components/common/CTASection";
 import { serviceCategories } from "../data/services";
@@ -42,7 +41,6 @@ export default function Services() {
       />
 
       <ServicesPipeline />
-      <ServiceProcess />
 
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
         <CTASection
