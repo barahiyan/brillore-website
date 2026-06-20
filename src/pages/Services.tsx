@@ -13,6 +13,7 @@ export default function Services() {
     <>
       <PageHero
         eyebrow="Our Services"
+        bgImage="./assets/images/hero-terminal.webp"
         title={
           <>
             Technical Services Built for{" "}

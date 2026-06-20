@@ -69,15 +69,15 @@ export default function Hero() {
         <motion.div style={{ y: bgY, scale: bgScale }} className="absolute inset-0">
           {HERO_VIDEO_BASENAME ? (
             <video
-              className="absolute inset-0 hidden h-full w-full object-cover opacity-40 md:block"
+              className="absolute inset-0 hidden h-full w-full object-cover opacity-[0.62] md:block"
               autoPlay
               muted
               loop
               playsInline
               poster="./assets/images/hero-terminal.webp"
               style={{
-                maskImage: "linear-gradient(90deg,transparent,#000 42%,#000 100%)",
-                WebkitMaskImage: "linear-gradient(90deg,transparent,#000 42%,#000 100%)",
+                maskImage: "linear-gradient(90deg,transparent,#000 40%,#000 100%)",
+                WebkitMaskImage: "linear-gradient(90deg,transparent,#000 40%,#000 100%)",
               }}
             >
               {HERO_VIDEO_FORMATS.map((f) => (
@@ -88,27 +88,27 @@ export default function Hero() {
           <img
             src="./assets/images/hero-terminal.webp"
             alt=""
-            className={`absolute inset-0 h-full w-full object-cover opacity-40 ${
+            className={`absolute inset-0 h-full w-full object-cover opacity-[0.55] ${
               HERO_VIDEO_BASENAME ? "md:hidden" : ""
             }`}
             style={{
-              maskImage: "linear-gradient(90deg,transparent 2%,#000 46%,#000 100%)",
-              WebkitMaskImage: "linear-gradient(90deg,transparent 2%,#000 46%,#000 100%)",
+              maskImage: "linear-gradient(90deg,transparent 2%,#000 44%,#000 100%)",
+              WebkitMaskImage: "linear-gradient(90deg,transparent 2%,#000 44%,#000 100%)",
             }}
             decoding="async"
           />
         </motion.div>
 
-        {/* Cinematic vignette + matte-black base so text stays crisp on the left */}
-        <div className="absolute inset-0 bg-gradient-to-r from-ink-900 via-ink-900/70 to-ink-900/30" />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink-900 via-transparent to-ink-900/60" />
-        <div className="absolute right-0 top-0 h-[640px] w-[640px] translate-x-1/4 rounded-full bg-radial-gold opacity-60 blur-2xl" />
+        {/* Matte-black base on the left so text stays crisp; right side reveals the footage */}
+        <div className="absolute inset-0 bg-gradient-to-r from-ink-900 via-ink-900/60 to-ink-900/10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink-900 via-transparent to-ink-900/50" />
+        <div className="absolute right-0 top-0 h-[560px] w-[560px] translate-x-1/3 rounded-full bg-radial-gold opacity-30 blur-2xl" />
 
         {/* Soft gold light sweep */}
         {!reduce && (
           <motion.div
             className="absolute inset-y-0 -left-1/3 w-1/3"
-            style={{ background: "linear-gradient(105deg,transparent,rgba(214,168,79,0.10),transparent)" }}
+            style={{ background: "linear-gradient(105deg,transparent,rgba(214,168,79,0.06),transparent)" }}
             animate={{ x: ["0%", "460%"] }}
             transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", repeatDelay: 3 }}
           />

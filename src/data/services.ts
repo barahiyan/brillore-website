@@ -106,6 +106,8 @@ export const serviceCategories: ServiceCategory[] = [
     description:
       "Clear reporting and practical technical documentation to support decision-making, compliance, and operational follow-up.",
     icon: "ClipboardCheck",
+    image: "./assets/images/reporting.webp",
+    imageCaption: "Operational Environments",
     items: [
       "Technical reporting",
       "Inspection support",
