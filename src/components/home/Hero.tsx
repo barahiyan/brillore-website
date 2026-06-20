@@ -102,6 +102,8 @@ export default function Hero() {
         {/* Matte-black base on the left so text stays crisp; right side reveals the footage */}
         <div className="absolute inset-0 bg-gradient-to-r from-ink-900 via-ink-900/60 to-ink-900/10" />
         <div className="absolute inset-0 bg-gradient-to-t from-ink-900 via-transparent to-ink-900/50" />
+        {/* Mobile has no left/right split, so darken the footage a touch for readability */}
+        <div className="absolute inset-0 bg-ink-900/35 md:hidden" />
         <div className="absolute right-0 top-0 h-[560px] w-[560px] translate-x-1/3 rounded-full bg-radial-gold opacity-30 blur-2xl" />
 
         {/* Soft gold light sweep */}
