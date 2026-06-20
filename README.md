@@ -101,10 +101,12 @@ brillore-website/
   `public/assets/images/` (keep `.webp`, similar aspect ratio) and rebuild — no
   code change needed. Slot mapping + the exact prompts used are in
   [`docs/higgsfield-prompts.md`](docs/higgsfield-prompts.md).
-- **Hero video (optional):** the hero accepts a desktop `.webm`/`.mp4` loop with
-  the webp as poster and a static webp on mobile. Add files to
-  `public/assets/videos/` and flip `HERO_VIDEO_BASENAME` in
-  [`src/components/home/Hero.tsx`](src/components/home/Hero.tsx). See the docs.
+- **Hero video (active):** a compressed cinematic loop
+  (`public/assets/videos/hero-loop.webm` ~498 KB + `.mp4` ~598 KB) plays as the
+  desktop hero backdrop; **mobile uses the static webp** for performance. Toggle
+  or replace via `HERO_VIDEO_BASENAME` in
+  [`src/components/home/Hero.tsx`](src/components/home/Hero.tsx) — see
+  [`public/assets/videos/README.md`](public/assets/videos/README.md).
 
 ## 📨 Contact Form
 

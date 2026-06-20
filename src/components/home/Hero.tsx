@@ -11,8 +11,8 @@ import { company } from "../../data/content";
  * static webp backdrop. The webp always remains the poster / mobile fallback.
  * HERO_VIDEO_FORMATS lists the files present in public/assets/videos/.
  */
-const HERO_VIDEO_BASENAME: string | null = null;
-const HERO_VIDEO_FORMATS: Array<"webm" | "mp4"> = ["mp4"];
+const HERO_VIDEO_BASENAME: string | null = "./assets/videos/hero-loop";
+const HERO_VIDEO_FORMATS: Array<"webm" | "mp4"> = ["webm", "mp4"];
 
 type Word = { t: string; gold?: boolean };
 const headlineLines: Word[][] = [

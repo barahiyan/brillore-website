@@ -32,12 +32,18 @@ Service Areas / Service Capability Preview) — never as real completed projects
 5. **marine** — "Ultra-realistic photograph of a marine vessel berthed beside an industrial oil terminal at dusk, dark calm water with elegant reflections, steel mooring and loading equipment, warm metallic gold rim lighting, deep charcoal and matte black atmosphere, subtle silver tones, distant blurred small figures in safety gear, professional corporate industrial photography, trustworthy premium mood. No visible text, no logos, no labels, no readable signage. Photorealistic, high detail, realistic, not futuristic, not sci-fi, no neon."
 6. **contact-abstract** — "Ultra-realistic premium abstract industrial background: extreme close-up of brushed steel and matte black surfaces with a single elegant sweep of warm metallic gold light, soft bokeh, deep charcoal tones, minimal sophisticated composition, subtle silver reflections, generous dark negative space. No people, no visible text, no logos, no labels, no machinery detail. Photorealistic, high detail, corporate and refined, not futuristic, not sci-fi, no neon."
 
-### Optional next step — hero video loop
-The hero is wired to accept a desktop video (with the webp above as poster +
-mobile fallback). To enable it: generate an 8s seamless loop (prompt #1 below in
-"Hero video loop"), export compressed `hero-loop.webm` + `hero-loop.mp4` into
-`public/assets/videos/`, then set `HERO_VIDEO_BASENAME = "./assets/videos/hero-loop"`
-in `src/components/home/Hero.tsx`. Mobile keeps the static webp for performance.
+### Hero video loop (LIVE on desktop)
+Generated with **Kling 3.0 Turbo** (image-to-video) using `hero-terminal.webp` as
+the start frame, 5s, 1080p, then compressed with ffmpeg to `hero-loop.webm`
+(~498 KB) + `hero-loop.mp4` (~598 KB) in `public/assets/videos/`. Plays on desktop;
+mobile uses the static webp poster. Encode commands are in
+`public/assets/videos/README.md`.
+
+**Prompt used:** "Very subtle, slow cinematic forward dolly through a premium oil
+and gas industrial terminal at dusk. Gentle drifting volumetric haze, faint flicker
+of warm gold rim light on polished steel pipelines, soft atmospheric movement.
+Extremely slow and minimal camera motion, calm and elegant, no people, no text.
+Photorealistic, moody matte-black and charcoal mood, not futuristic."
 
 ---
 

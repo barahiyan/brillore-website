@@ -1,18 +1,32 @@
-# Hero video (optional)
+# Hero video
 
-The hero works perfectly as a static image and does **not** require a video.
+**Status: ACTIVE.** `hero-loop.webm` (~498 KB) + `hero-loop.mp4` (~598 KB) play as
+the desktop hero backdrop. Mobile uses the static `hero-terminal.webp` poster for
+performance (the `<video>` is `hidden` below the `md` breakpoint).
 
-To enable an optional cinematic loop on **desktop** (mobile always keeps the
-lightweight static webp for performance):
+Controlled in `src/components/home/Hero.tsx`:
 
-1. Generate an ~8s seamless loop (see prompt #1 "Hero video loop" in
-   `docs/higgsfield-prompts.md`).
-2. Compress and export two files into this folder:
-   - `hero-loop.webm` (VP9/AV1, target < 4 MB)
-   - `hero-loop.mp4` (H.264 fallback)
-3. In `src/components/home/Hero.tsx`, set:
-   ```ts
-   const HERO_VIDEO_BASENAME = "./assets/videos/hero-loop";
+```ts
+const HERO_VIDEO_BASENAME = "./assets/videos/hero-loop"; // null = static image only
+const HERO_VIDEO_FORMATS = ["webm", "mp4"];              // webm preferred, mp4 fallback
+```
+
+## How these files were made
+
+1. **Generated** via Higgsfield (Kling 3.0 Turbo), image-to-video using
+   `hero-terminal.webp` as the start frame, 5s, 1080p. Prompt is logged in
+   `docs/higgsfield-prompts.md`.
+2. **Compressed** with ffmpeg (raw was ~11 MB → ~0.5 MB):
+
+   ```bash
+   # mp4 (H.264)
+   ffmpeg -y -i raw.mp4 -vf "scale=1280:-2" -an -c:v libx264 -crf 26 \
+     -preset slow -pix_fmt yuv420p -movflags +faststart hero-loop.mp4
+
+   # webm (VP9)
+   ffmpeg -y -i raw.mp4 -vf "scale=1280:-2" -an -c:v libvpx-vp9 -crf 36 \
+     -b:v 0 -row-mt 1 hero-loop.webm
    ```
-4. Rebuild. `hero-terminal.webp` is automatically used as the poster and the
-   mobile fallback.
+
+To replace the loop later, regenerate, run the two commands above, and drop the
+files here (same names). To disable video entirely, set `HERO_VIDEO_BASENAME = null`.
