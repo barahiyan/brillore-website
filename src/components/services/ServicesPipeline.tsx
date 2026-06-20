@@ -11,13 +11,10 @@ const nodes = [
   { icon: LifeBuoy, title: "Follow-up support", text: "Ongoing assistance and recommendations." },
 ];
 
-/** Interactive vertical pipeline with a scroll-driven gold progress line. */
+/** Vertical left-rail pipeline with a scroll-driven gold progress line. */
 export default function ServicesPipeline() {
   const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start 70%", "end 60%"],
-  });
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start 75%", "end 65%"] });
   const lineHeight = useSpring(scrollYProgress, { stiffness: 80, damping: 24 });
 
   return (
@@ -29,55 +26,37 @@ export default function ServicesPipeline() {
         align="center"
       />
 
-      <div ref={ref} className="relative mx-auto mt-16 max-w-3xl">
-        {/* Track */}
-        <div className="absolute left-7 top-0 h-full w-px bg-line md:left-1/2 md:-translate-x-1/2" />
-        {/* Progress fill */}
+      <div ref={ref} className="relative mx-auto mt-16 max-w-2xl">
+        {/* Rail track + scroll progress fill (runs through the node centres at x=28px) */}
+        <div className="absolute left-7 top-7 h-[calc(100%-3.5rem)] w-px -translate-x-1/2 bg-line" />
         <motion.div
           style={{ scaleY: lineHeight }}
-          className="absolute left-7 top-0 h-full w-px origin-top bg-gold-grad md:left-1/2 md:-translate-x-1/2"
+          className="absolute left-7 top-7 h-[calc(100%-3.5rem)] w-px origin-top -translate-x-1/2 bg-gold-grad"
         />
 
-        <div className="space-y-10">
-          {nodes.map((n, i) => {
-            const right = i % 2 === 1;
-            return (
-              <motion.div
-                key={n.title}
-                initial={{ opacity: 0, y: 26 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-70px" }}
-                transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                className={`relative grid grid-cols-[auto,1fr] items-start gap-5 md:grid-cols-2 md:gap-10 ${
-                  right ? "md:[direction:rtl]" : ""
-                }`}
-              >
-                {/* Node marker */}
-                <span className="absolute left-7 top-2 z-10 -translate-x-1/2 md:left-1/2">
-                  <span className="grid h-4 w-4 place-items-center rounded-full bg-gold-grad shadow-gold">
-                    <span className="h-1.5 w-1.5 rounded-full bg-ink-900" />
-                  </span>
+        <ol className="space-y-6">
+          {nodes.map((n, i) => (
+            <motion.li
+              key={n.title}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-70px" }}
+              transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+              className="relative flex items-start gap-5"
+            >
+              <span className="relative z-10 grid h-14 w-14 shrink-0 place-items-center rounded-full border border-gold/30 bg-ink-800 text-gold">
+                <n.icon className="h-6 w-6" strokeWidth={1.6} />
+              </span>
+              <div className="glass card-hover group flex-1 p-5">
+                <span className="text-[11px] font-semibold uppercase tracking-label text-gold/70">
+                  Step {String(i + 1).padStart(2, "0")}
                 </span>
-
-                {/* Card (offset to one side) */}
-                <div className={`col-start-2 md:[direction:ltr] ${right ? "md:col-start-1" : "md:col-start-2"}`}>
-                  <div className="glass card-hover group p-5">
-                    <div className="flex items-center gap-3">
-                      <span className="grid h-10 w-10 place-items-center rounded-lg border border-gold/25 bg-gold/5 text-gold">
-                        <n.icon className="h-5 w-5" strokeWidth={1.6} />
-                      </span>
-                      <span className="text-[11px] font-semibold uppercase tracking-label text-gold/70">
-                        Step {String(i + 1).padStart(2, "0")}
-                      </span>
-                    </div>
-                    <h3 className="mt-3 text-lg font-semibold text-fog">{n.title}</h3>
-                    <p className="mt-1.5 text-sm leading-relaxed text-muted">{n.text}</p>
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
+                <h3 className="mt-2 text-lg font-semibold text-fog">{n.title}</h3>
+                <p className="mt-1.5 text-sm leading-relaxed text-muted">{n.text}</p>
+              </div>
+            </motion.li>
+          ))}
+        </ol>
       </div>
     </section>
   );
