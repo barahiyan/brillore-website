@@ -64,8 +64,18 @@
 
   body {
     @apply bg-ink-900 text-fog font-sans antialiased;
+  }
+
+  /* Fixed background wash on its own compositor layer. Replaces
+     `background-attachment: fixed`, which repainted on every scroll frame
+     and caused visible content shake/jank during scroll. */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
     background-image: var(--body-grad);
-    background-attachment: fixed;
+    pointer-events: none;
   }
 
   ::selection {
