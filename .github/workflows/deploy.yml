@@ -1,0 +1,39 @@
+name: Build & Deploy to icdsoft
+
+# Kila push kwenye main: jenga tovuti na peleka kwa FTP kwenye icdsoft.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # inaruhusu ku-trigger kwa mkono kutoka GitHub UI
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy to icdsoft via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          # Web root ya domain kwenye icdsoft. Thibitisha kwenye File Manager.
+          # Kawaida ni /www/  au  /public_html/  — weka kama secret FTP_REMOTE_DIR.
+          server-dir: ${{ secrets.FTP_REMOTE_DIR }}
+          local-dir: ./dist/
+          # Zuia kufuta faili nyingine zilizopo kwenye seva ambazo si za hii repo
+          dangerous-clean-slate: false
