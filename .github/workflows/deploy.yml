@@ -31,6 +31,8 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
+          # icdsoft inahitaji FTP juu ya TLS (explicit FTPS) — vinginevyo data socket inakatika (ECONNRESET)
+          protocol: ftps
           # Web root ya domain kwenye icdsoft. Thibitisha kwenye File Manager.
           # Kawaida ni /www/  au  /public_html/  — weka kama secret FTP_REMOTE_DIR.
           server-dir: ${{ secrets.FTP_REMOTE_DIR }}
