@@ -99,7 +99,7 @@ export default function ParallaxBand({
             >
               <div className="rounded-[2.25rem] bg-black/[0.035] p-2 ring-1 ring-black/[0.07]">
                 <div className="relative min-h-[360px] overflow-hidden rounded-[1.8rem] bg-[#E9E1D3] shadow-[inset_0_1px_0_rgba(255,255,255,0.7)] sm:min-h-[460px] lg:min-h-[560px]">
-                  <motion.div style={{ y }} className="absolute inset-x-0 -top-[14%] h-[128%]">
+                  <motion.div style={{ y, willChange: "transform", backfaceVisibility: "hidden" }} className="absolute inset-x-0 -top-[14%] h-[128%]">
                     <img
                       src={img}
                       alt=""
@@ -143,7 +143,7 @@ export default function ParallaxBand({
       className="relative flex min-h-[72vh] items-center overflow-hidden py-24 md:min-h-[80vh]"
     >
       {/* Parallax photo */}
-      <motion.div style={{ y }} className="absolute inset-x-0 -top-[16%] h-[132%]">
+      <motion.div style={{ y, willChange: "transform", backfaceVisibility: "hidden" }} className="absolute inset-x-0 -top-[16%] h-[132%]">
         <img src={img} alt="" aria-hidden className="h-full w-full object-cover" loading="lazy" decoding="async" />
       </motion.div>
 

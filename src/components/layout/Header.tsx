@@ -32,7 +32,7 @@ export default function Header() {
       transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "border-b border-line bg-ink-900/80 backdrop-blur-xl"
+          ? "border-b border-line bg-ink-900/90 backdrop-blur-md"
           : "border-b border-transparent bg-transparent"
       }`}
     >

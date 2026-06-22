@@ -69,7 +69,7 @@ export default function Hero() {
       {/* Background layers */}
       <motion.div aria-hidden style={{ opacity: fadeOut }} className="pointer-events-none absolute inset-0">
         {/* Cinematic industrial backdrop — kept clearly visible on the right, fading into matte black on the left */}
-        <motion.div style={{ y: bgY, scale: bgScale }} className="absolute inset-0">
+        <motion.div style={{ y: bgY, scale: bgScale, willChange: "transform", backfaceVisibility: "hidden" }} className="absolute inset-0">
           {/* Cinematic video background + parallax still fallback, on both themes.
               Footage opacity is dialed down on the light theme (see globals
               `.light .hero-footage`) so the warm-paper scrim keeps the copy crisp. */}
@@ -227,7 +227,7 @@ export default function Hero() {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.1, delay: 0.3, ease }}
-          style={{ y: visualY }}
+          style={{ y: visualY, willChange: "transform" }}
           className="relative lg:col-span-5"
         >
           {/* Wide ambient pool supports the instrument without hiding the

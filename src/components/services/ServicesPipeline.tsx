@@ -30,7 +30,7 @@ export default function ServicesPipeline() {
         {/* Rail track + scroll progress fill (runs through the node centres at x=28px) */}
         <div className="absolute left-7 top-7 h-[calc(100%-3.5rem)] w-px -translate-x-1/2 bg-line" />
         <motion.div
-          style={{ scaleY: lineHeight }}
+          style={{ scaleY: lineHeight, willChange: "transform" }}
           className="absolute left-7 top-7 h-[calc(100%-3.5rem)] w-px origin-top -translate-x-1/2 bg-gold-grad"
         />
 
