@@ -5,17 +5,15 @@
   RewriteEngine On
   RewriteBase /
 
-  # ---- Canonical URL redirects ----
-  # NOTE: WASHA hizi MBILI tu BAADA ya kuwasha SSL kwenye icdsoft.
-  # Zikiwashwa kabla ya SSL, tovuti itakwama kwenye redirect loop.
-  #
-  # # Force HTTPS
-  # RewriteCond %{HTTPS} off
-  # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-  #
-  # # Force non-www (brillore.co.tz, si www.brillore.co.tz)
-  # RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
-  # RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
+  # ---- Canonical URL redirects (SSL hai tangu Jun 2026) ----
+  # Force HTTPS (huangalia pia X-Forwarded-Proto kuepuka redirect loop nyuma ya proxy)
+  RewriteCond %{HTTPS} off
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+  # Force non-www (brillore.co.tz, si www.brillore.co.tz)
+  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
 
   # ---- SPA fallback for React Router ----
   RewriteRule ^index\.html$ - [L]
@@ -34,8 +32,8 @@
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
   # Zima APIs zisizohitajika
   Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
-  # HSTS — WASHA tu BAADA ya SSL kufanya kazi (huambia browser itumie HTTPS daima)
-  # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+  # HSTS — huambia browser itumie HTTPS daima (SSL hai)
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
 </IfModule>
 
 # ---- Performance: long-cache hashed assets ----
