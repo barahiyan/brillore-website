@@ -12,7 +12,6 @@ export default function IndustriesPreview() {
 
       <div className="container-xl">
         <SectionHeading
-          eyebrow="Industries We Serve"
           title="Trusted across the sectors that demand precision"
           subtitle="From petroleum terminals to marine facilities, our services support operations where accuracy and safety are non-negotiable."
           align="center"

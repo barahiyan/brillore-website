@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import ThreeHeroObject from "../three/ThreeHeroObject";
 import AnimatedCounter from "../common/AnimatedCounter";
+import { useTheme } from "../common/theme";
 import { company } from "../../data/content";
 
 /**
@@ -54,6 +55,8 @@ const stats: Stat[] = [
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
+  const { theme } = useTheme();
+  const light = theme === "light";
 
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", reduce ? "0%" : "16%"]);
@@ -67,14 +70,17 @@ export default function Hero() {
       <motion.div aria-hidden style={{ opacity: fadeOut }} className="pointer-events-none absolute inset-0">
         {/* Cinematic industrial backdrop — kept clearly visible on the right, fading into matte black on the left */}
         <motion.div style={{ y: bgY, scale: bgScale }} className="absolute inset-0">
+          {/* Cinematic video background + parallax still fallback, on both themes.
+              Footage opacity is dialed down on the light theme (see globals
+              `.light .hero-footage`) so the warm-paper scrim keeps the copy crisp. */}
           {HERO_VIDEO_BASENAME ? (
             <video
-              className="absolute inset-0 hidden h-full w-full object-cover opacity-[0.62] md:block"
+              className="hero-footage absolute inset-0 hidden h-full w-full object-cover opacity-[0.62] md:block"
               autoPlay
               muted
               loop
               playsInline
-              poster="./assets/images/hero-terminal.webp"
+              poster={light ? "./assets/images/hero-terminal-day.webp" : "./assets/images/hero-terminal.webp"}
               style={{
                 maskImage: "linear-gradient(90deg,transparent,#000 40%,#000 100%)",
                 WebkitMaskImage: "linear-gradient(90deg,transparent,#000 40%,#000 100%)",
@@ -86,9 +92,9 @@ export default function Hero() {
             </video>
           ) : null}
           <img
-            src="./assets/images/hero-terminal.webp"
+            src={light ? "./assets/images/hero-terminal-day.webp" : "./assets/images/hero-terminal.webp"}
             alt=""
-            className={`absolute inset-0 h-full w-full object-cover opacity-[0.55] ${
+            className={`hero-footage absolute inset-0 h-full w-full object-cover opacity-[0.55] ${
               HERO_VIDEO_BASENAME ? "md:hidden" : ""
             }`}
             style={{
@@ -99,11 +105,24 @@ export default function Hero() {
           />
         </motion.div>
 
-        {/* Matte-black base on the left so text stays crisp; right side reveals the footage */}
-        <div className="absolute inset-0 bg-gradient-to-r from-ink-900 via-ink-900/60 to-ink-900/10" />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink-900 via-transparent to-ink-900/50" />
-        {/* Mobile has no left/right split, so darken the footage a touch for readability */}
-        <div className="absolute inset-0 bg-ink-900/35 md:hidden" />
+        {/* Theme-aware scrims (matte black on dark, warm paper on light). The light
+            theme uses a heavier wash so the copy reads cleanly over the footage. */}
+        {light ? (
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(90deg,rgba(245,241,233,0.99) 0%,rgba(245,241,233,0.94) 36%,rgba(245,241,233,0.58) 58%,rgba(245,241,233,0.08) 80%),linear-gradient(0deg,rgba(245,241,233,0.96) 0%,rgba(245,241,233,0.12) 34%,rgba(245,241,233,0.2) 100%)",
+            }}
+          />
+        ) : (
+          <>
+            <div className="absolute inset-0 bg-gradient-to-r from-ink-900 via-ink-900/65 to-ink-900/30" />
+            <div className="absolute inset-0 bg-gradient-to-t from-ink-900 via-transparent to-ink-900/45" />
+          </>
+        )}
+        {/* Mobile has no left/right split, so wash the photo for readability */}
+        <div className={`absolute inset-0 md:hidden ${light ? "bg-[#F5F1E9]/35" : "bg-ink-900/40"}`} />
         <div className="absolute right-0 top-0 h-[560px] w-[560px] translate-x-1/3 rounded-full bg-radial-gold opacity-30 blur-2xl" />
 
         {/* Soft gold light sweep */}
@@ -126,18 +145,17 @@ export default function Hero() {
             variants={fade}
             initial="hidden"
             animate="show"
-            className="inline-flex items-center gap-2.5 rounded-full border border-line bg-white/[0.03] px-4 py-1.5 backdrop-blur-md"
+            className="hero-credential inline-flex items-center gap-2.5 rounded-full border border-line bg-white/[0.03] px-4 py-1.5 backdrop-blur-md"
           >
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold/60" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-gold" />
-            </span>
+            {/* Brand gold diamond (echoes the marquee + section markers) rather
+                than a generic pulsing "live" dot. */}
+            <span className="h-1.5 w-1.5 rotate-45 bg-gold" />
             <span className="text-xs font-medium tracking-wide text-fog/80">
               {company.category}
             </span>
           </motion.div>
 
-          <h1 className="mt-6 font-serif text-[2.7rem] font-semibold leading-[1.04] tracking-tight text-fog sm:text-6xl lg:text-[4.2rem]">
+          <h1 className="mt-6 font-serif text-[2.7rem] font-medium leading-[0.98] tracking-[-0.045em] text-fog sm:text-6xl lg:text-[4.2rem]">
             {headlineLines.map((line, i) => (
               <motion.span
                 key={i}
@@ -162,7 +180,7 @@ export default function Hero() {
             variants={fade}
             initial="hidden"
             animate="show"
-            className="mt-6 max-w-md text-lg leading-relaxed text-muted"
+            className="mt-6 max-w-md text-lg leading-relaxed text-fog/80"
           >
             Dependable measurement, inspection, and safety services for oil, gas, industrial, and
             marine operations.
@@ -195,7 +213,7 @@ export default function Hero() {
           >
             {stats.map((s) => (
               <div key={s.label} className="bg-ink-800/95 px-4 py-4">
-                <dd className="font-serif text-2xl font-semibold text-gold-soft sm:text-3xl">
+                <dd className={`font-serif font-medium text-gold-soft ${"text" in s ? "whitespace-nowrap text-lg sm:text-xl" : "text-2xl sm:text-3xl"}`}>
                   {"value" in s ? <AnimatedCounter value={s.value} suffix={s.suffix} /> : s.text}
                 </dd>
                 <dt className="mt-1 text-[11px] leading-tight text-fog/70">{s.label}</dt>
@@ -212,7 +230,17 @@ export default function Hero() {
           style={{ y: visualY }}
           className="relative lg:col-span-5"
         >
-          <div className="animate-floaty">
+          {/* Wide ambient pool supports the instrument without hiding the
+              terminal; the instrument adds its own concentric contrast plate. */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute left-1/2 top-1/2 h-[118%] w-[118%] -translate-x-1/2 -translate-y-1/2"
+            style={{
+              background:
+                "radial-gradient(circle at center, rgb(var(--ink-900) / 0.72) 0%, rgb(var(--ink-900) / 0.3) 46%, transparent 72%)",
+            }}
+          />
+          <div className="relative animate-floaty">
             <ThreeHeroObject />
           </div>
         </motion.div>

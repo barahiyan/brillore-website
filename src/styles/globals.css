@@ -8,8 +8,54 @@
    ============================================================ */
 
 @layer base {
+  /* ---- Theme tokens (dark = default) ---------------------------------
+     Components never change their classes; only these values swap. RGB
+     channels are space-separated so Tailwind opacity utilities still work. */
   :root {
     color-scheme: dark;
+    --ink-900: 5 5 5; /* matte black — base background */
+    --ink-800: 9 10 10; /* near black — raised surface */
+    --ink-700: 17 19 21; /* charcoal — card / hover */
+    --ink-600: 24 26 28;
+    --gold: 214 168 79;
+    --gold-soft: 224 191 117;
+    --gold-deep: 201 154 61;
+    --gold-bronze: 184 137 47;
+    --silver: 232 232 232;
+    --muted: 154 154 154; /* secondary text */
+    --cream: 244 240 232;
+    --fog: 232 232 232; /* primary text */
+    --line: rgba(214, 168, 79, 0.18);
+    /* body backdrop wash */
+    --body-grad:
+      radial-gradient(900px 520px at 82% -12%, rgba(214, 168, 79, 0.035), transparent 60%),
+      radial-gradient(760px 520px at -12% 18%, rgba(24, 26, 28, 0.95), transparent 62%),
+      linear-gradient(180deg, #050505 0%, #090a0a 100%);
+    --selection-bg: rgba(214, 168, 79, 0.28);
+    --selection-fg: #fff;
+  }
+
+  /* ---- Light theme: warm paper + deep gold -------------------------- */
+  .light {
+    color-scheme: light;
+    --ink-900: 245 241 233; /* warm paper — base background */
+    --ink-800: 239 233 221; /* deeper paper band */
+    --ink-700: 255 255 255; /* card surface */
+    --ink-600: 248 244 237;
+    --gold: 184 137 47; /* deep gold reads on light */
+    --gold-soft: 154 111 34;
+    --gold-deep: 154 111 34;
+    --gold-bronze: 154 111 34;
+    --silver: 22 19 14;
+    --muted: 107 100 89; /* warm grey */
+    --cream: 22 19 14;
+    --fog: 22 19 14; /* near-black warm — primary text */
+    --line: rgba(22, 19, 14, 0.12);
+    --body-grad:
+      radial-gradient(900px 520px at 82% -12%, rgba(184, 137, 47, 0.07), transparent 60%),
+      linear-gradient(180deg, #f5f1e9 0%, #efe9dd 100%);
+    --selection-bg: rgba(184, 137, 47, 0.25);
+    --selection-fg: #16130e;
   }
 
   html {
@@ -18,21 +64,23 @@
 
   body {
     @apply bg-ink-900 text-fog font-sans antialiased;
-    background-image:
-      radial-gradient(900px 520px at 82% -12%, rgba(214, 168, 79, 0.035), transparent 60%),
-      radial-gradient(760px 520px at -12% 18%, rgba(24, 26, 28, 0.95), transparent 62%),
-      linear-gradient(180deg, #050505 0%, #090a0a 100%);
+    background-image: var(--body-grad);
     background-attachment: fixed;
   }
 
   ::selection {
-    background: rgba(214, 168, 79, 0.28);
-    color: #fff;
+    background: var(--selection-bg);
+    color: var(--selection-fg);
   }
 
   h1, h2, h3, h4 {
     @apply font-serif;
+    letter-spacing: -0.035em;
     text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
   }
 
   /* Visible keyboard focus for accessibility */
@@ -42,15 +90,15 @@
     border-radius: 4px;
   }
 
-  /* Custom scrollbar */
+  /* Custom scrollbar (theme-aware) */
   ::-webkit-scrollbar { width: 10px; }
-  ::-webkit-scrollbar-track { background: #050505; }
+  ::-webkit-scrollbar-track { background: rgb(var(--ink-900)); }
   ::-webkit-scrollbar-thumb {
-    background: #26282c;
+    background: rgb(var(--ink-600));
     border-radius: 8px;
-    border: 2px solid #050505;
+    border: 2px solid rgb(var(--ink-900));
   }
-  ::-webkit-scrollbar-thumb:hover { background: #B8892F; }
+  ::-webkit-scrollbar-thumb:hover { background: rgb(var(--gold-bronze)); }
 }
 
 @layer components {
@@ -63,7 +111,7 @@
      Sentence case + restrained tracking reads as a deliberate label, not an
      AI "tiny uppercase tracked kicker". */
   .eyebrow {
-    @apply inline-flex items-center gap-2.5 text-[13px] font-semibold tracking-wide text-gold/90;
+    @apply inline-flex items-center gap-2.5 text-[12px] font-semibold tracking-[0.08em] text-gold;
   }
   .eyebrow::before {
     content: "";
@@ -157,7 +205,60 @@
     @apply absolute inset-x-0 top-0 h-px;
     background: linear-gradient(90deg, transparent, rgba(214, 168, 79, 0.7), transparent);
   }
+
+  /* ============================================================
+     Light-theme adjustments for components that ship dark-only
+     literals (buttons, glass, gradient text). Structure/markup is
+     untouched — these only restyle existing classes under .light.
+     ============================================================ */
+  .light .btn-primary {
+    color: #fff;
+    background: linear-gradient(135deg, #c99a3d 0%, #b8892f 55%, #9a6f22 100%);
+    border-color: rgba(184, 137, 47, 0.5);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25), 0 10px 24px -12px rgba(184, 137, 47, 0.55);
+    backdrop-filter: none;
+  }
+  .light .btn-primary:hover {
+    border-color: rgba(154, 111, 34, 0.9);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 16px 32px -14px rgba(184, 137, 47, 0.65);
+  }
+  .light .btn-ghost {
+    color: #16130e;
+    background: #fff;
+    border-color: rgba(184, 137, 47, 0.4);
+    box-shadow: 0 6px 18px -12px rgba(0, 0, 0, 0.25);
+    backdrop-filter: none;
+  }
+  .light .btn-ghost:hover {
+    color: #9a6f22;
+    border-color: rgba(184, 137, 47, 0.8);
+    background: rgba(184, 137, 47, 0.06);
+  }
+  /* the light-sweep highlight is invisible/odd on paper buttons */
+  .light .btn::after { display: none; }
+
+  .light .glass {
+    background: #fff;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 18px 40px -28px rgba(22, 19, 14, 0.25);
+  }
+
+  /* deeper gradient so gold headline text keeps contrast on paper */
+  .light .text-gold-grad {
+    background-image: linear-gradient(135deg, #b8892f 0%, #9a6f22 55%, #7c5818 100%);
+  }
+
+  .light .hero-credential {
+    background: rgba(255, 255, 255, 0.62);
+    border-color: rgba(22, 19, 14, 0.16);
+    box-shadow: 0 12px 30px -24px rgba(22, 19, 14, 0.35);
+  }
 }
+
+/* In light mode the dark industrial photos are dampened so they read as a
+   faint texture on warm paper instead of muddy grey blocks. */
+.light .bg-photo { opacity: 0.055; }
+/* Daylight imagery stays present; localized paper scrims protect the copy. */
+.light .hero-footage { opacity: 0.74; }
 
 /* Respect reduced motion globally */
 @media (prefers-reduced-motion: reduce) {

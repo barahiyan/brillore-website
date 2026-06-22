@@ -31,3 +31,12 @@ Thumbs.db
 
 # Local asset-generation scratch (raw Higgsfield downloads; optimized webp live in public/)
 .asset-src
+
+# Large review videos (do not push to GitHub)
+*.mp4
+.review-video/
+
+# Local agent/tooling scratch
+.agents/
+.tools/
+.claude/skills/

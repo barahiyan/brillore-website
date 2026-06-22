@@ -18,6 +18,7 @@ export default function Home() {
 
       <ParallaxBand
         image="./assets/images/pipeline-integrity.webp"
+        lightImage="./assets/images/tank-farm-day.webp"
         eyebrow="Operational Environments"
         title="Built for environments where precision is not optional"
         subtitle="From petroleum terminals to pipelines and tanks, our measurement and inspection work supports safe, dependable operations."
@@ -29,6 +30,7 @@ export default function Home() {
 
       <ParallaxBand
         image="./assets/images/marine.webp"
+        lightImage="./assets/images/marine-day.webp"
         eyebrow="Across Land & Sea"
         title="Technical support that follows your operations"
         subtitle="Oil and gas, fire safety, and marine, measured and inspected to the same exacting standard."

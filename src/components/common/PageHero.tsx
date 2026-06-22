@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import type { ReactNode } from "react";
+import { useTheme } from "./theme";
 
 interface PageHeroProps {
   eyebrow: string;
@@ -8,29 +9,48 @@ interface PageHeroProps {
   children?: ReactNode;
   /** Optional premium background image (masked into the matte-black backdrop). */
   bgImage?: string;
+  /** Optional daytime variant shown on the light theme. */
+  bgImageLight?: string;
 }
 
-/** Reusable interior-page hero: dark industrial backdrop, gold label, large heading. */
-export default function PageHero({ eyebrow, title, subtitle, children, bgImage }: PageHeroProps) {
+/** Reusable interior-page hero: industrial backdrop, gold label, large heading. */
+export default function PageHero({ eyebrow, title, subtitle, children, bgImage, bgImageLight }: PageHeroProps) {
+  const { theme } = useTheme();
+  const useDay = theme === "light" && !!bgImageLight;
+  const src = useDay ? bgImageLight : bgImage;
   return (
     <section className="relative overflow-hidden pt-32 pb-16 md:pt-40 md:pb-20">
       {/* Optional photographic backdrop */}
-      {bgImage && (
+      {src && (
         <div aria-hidden className="pointer-events-none absolute inset-0">
           <img
-            src={bgImage}
+            src={src}
             alt=""
-            className="h-full w-full object-cover opacity-[0.45]"
-            style={{ maskImage: "radial-gradient(ellipse 90% 85% at 60% 25%,#000,transparent 80%)", WebkitMaskImage: "radial-gradient(ellipse 90% 85% at 60% 25%,#000,transparent 80%)" }}
+            className="pagehero-photo h-full w-full object-cover"
+            style={{
+              maskImage: "radial-gradient(ellipse 90% 85% at 60% 25%,#000,transparent 80%)",
+              WebkitMaskImage: "radial-gradient(ellipse 90% 85% at 60% 25%,#000,transparent 80%)",
+              opacity: useDay ? 0.72 : 0.45,
+            }}
             loading="eager"
             decoding="async"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-ink-900/20 via-ink-900/10 to-ink-900" />
+          {useDay ? (
+            <div
+              className="absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(90deg,rgba(245,241,233,0.98) 0%,rgba(245,241,233,0.88) 48%,rgba(245,241,233,0.16) 82%),linear-gradient(0deg,#F5F1E9 0%,rgba(245,241,233,0.08) 52%,rgba(245,241,233,0.18) 100%)",
+              }}
+            />
+          ) : (
+            <div className="absolute inset-0 bg-gradient-to-b from-ink-900/20 via-ink-900/10 to-ink-900" />
+          )}
         </div>
       )}
-      {/* Radial glow + grid backdrop */}
+      {/* Subtle grid backdrop (no discrete glow blob — the photo + body backdrop
+          carry the warmth, keeping the hero from reading as an AI gradient blob). */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-0 h-[420px] w-[820px] -translate-x-1/2 rounded-full bg-radial-gold opacity-70 blur-2xl" />
         <div
           className="absolute inset-0 opacity-[0.05]"
           style={{
@@ -55,7 +75,7 @@ export default function PageHero({ eyebrow, title, subtitle, children, bgImage }
           initial={{ opacity: 0, y: 22 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-5 max-w-4xl text-4xl font-semibold leading-[1.08] text-fog sm:text-5xl md:text-6xl"
+          className="mt-5 max-w-4xl text-4xl font-medium leading-[1.02] tracking-[-0.04em] text-fog sm:text-5xl md:text-6xl"
         >
           {title}
         </motion.h1>

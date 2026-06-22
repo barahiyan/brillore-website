@@ -13,6 +13,7 @@ export default function Services() {
       <PageHero
         eyebrow="Our Services"
         bgImage="./assets/images/hero-terminal.webp"
+        bgImageLight="./assets/images/hero-terminal-day.webp"
         title={
           <>
             Technical Services Built for{" "}
@@ -33,6 +34,7 @@ export default function Services() {
 
       <ParallaxBand
         image="./assets/images/fire-safety.webp"
+        lightImage="./assets/images/fire-safety-day.webp"
         eyebrow="Safety First"
         title="Compliance and safety, engineered into every service"
         subtitle="From fire safety systems to inspection reporting, our work is built around protecting people, assets, and operational continuity."

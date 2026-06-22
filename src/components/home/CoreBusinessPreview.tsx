@@ -9,7 +9,6 @@ export default function CoreBusinessPreview() {
     <section className="relative py-20 md:py-28">
       <div className="container-xl">
         <SectionHeading
-          eyebrow="Core Business Areas"
           title="Three disciplines, one standard of precision"
           subtitle="Specialized technical services that keep critical operations measured, safe, and compliant."
           align="center"

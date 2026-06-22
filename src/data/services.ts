@@ -11,6 +11,8 @@ export interface ServiceCategory {
   items: string[];
   /** Optional photographic visual. If absent, a decorative panel is shown. */
   image?: string;
+  /** Daytime variant shown on the light theme. */
+  lightImage?: string;
   /** Neutral caption shown on the media panel (never a real-project claim). */
   imageCaption?: string;
 }
@@ -49,6 +51,7 @@ export const serviceCategories: ServiceCategory[] = [
       "Accurate measurement, verification, and inspection support for petroleum-related operations and facilities.",
     icon: "Gauge",
     image: "./assets/images/oil-gas.webp",
+    lightImage: "./assets/images/oil-gas-day.webp",
     imageCaption: "Operational Environments",
     items: [
       "Oil flow measurements",
@@ -64,6 +67,7 @@ export const serviceCategories: ServiceCategory[] = [
       "Practical technical support for pipeline and asset reliability, helping clients maintain safer and more dependable operations.",
     icon: "Workflow",
     image: "./assets/images/pipeline-integrity.webp",
+    lightImage: "./assets/images/pipeline-integrity-day.webp",
     imageCaption: "Technical Service Areas",
     items: [
       "Pipeline pigging",
@@ -79,6 +83,7 @@ export const serviceCategories: ServiceCategory[] = [
       "Technical support services focused on improving safety, protection, and compliance for industrial and commercial environments.",
     icon: "Flame",
     image: "./assets/images/fire-safety.webp",
+    lightImage: "./assets/images/fire-safety-day.webp",
     imageCaption: "Service Capability Preview",
     items: [
       "Fire safety system support",
@@ -93,6 +98,7 @@ export const serviceCategories: ServiceCategory[] = [
       "Professional technical support for marine-related operations, facilities, and service requirements.",
     icon: "Ship",
     image: "./assets/images/marine.webp",
+    lightImage: "./assets/images/marine-day.webp",
     imageCaption: "Operational Environments",
     items: [
       "Marine technical support services",
@@ -107,6 +113,7 @@ export const serviceCategories: ServiceCategory[] = [
       "Clear reporting and practical technical documentation to support decision-making, compliance, and operational follow-up.",
     icon: "ClipboardCheck",
     image: "./assets/images/reporting.webp",
+    lightImage: "./assets/images/reporting-day.webp",
     imageCaption: "Operational Environments",
     items: [
       "Technical reporting",

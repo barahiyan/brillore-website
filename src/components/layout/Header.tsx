@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 import { navLinks, company } from "../../data/content";
 import Logo from "../common/Logo";
+import ThemeToggle from "../common/ThemeToggle";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -72,21 +73,25 @@ export default function Header() {
               )}
             </NavLink>
           ))}
+          <ThemeToggle />
           <Link to="/contact" className="btn btn-primary !px-5 !py-2.5">
             Request Consultation
             <ArrowUpRight className="h-4 w-4" strokeWidth={2} />
           </Link>
         </div>
 
-        {/* Mobile toggle */}
-        <button
-          onClick={() => setOpen((v) => !v)}
-          className="grid h-11 w-11 place-items-center rounded-full border border-line text-fog md:hidden"
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-expanded={open}
-        >
-          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
+        {/* Mobile controls */}
+        <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle className="h-11 w-11" />
+          <button
+            onClick={() => setOpen((v) => !v)}
+            className="grid h-11 w-11 place-items-center rounded-full border border-line text-fog"
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+          >
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
       </nav>
 
       {/* Mobile menu */}

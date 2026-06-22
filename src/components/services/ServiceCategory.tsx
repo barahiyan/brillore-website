@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 import Icon from "../common/Icon";
+import { useTheme } from "../common/theme";
 import type { ServiceCategory as ServiceCategoryType } from "../../data/services";
 
 interface Props {
@@ -11,6 +12,10 @@ interface Props {
 /** Alternating-layout service block: media panel on one side, content on the other. */
 export default function ServiceCategory({ category, index }: Props) {
   const reversed = index % 2 === 1;
+  const { theme } = useTheme();
+  // Daytime photo on the light theme so service imagery stays bright on paper.
+  const media =
+    theme === "light" && category.lightImage ? category.lightImage : category.image;
 
   return (
     <motion.article
@@ -24,9 +29,9 @@ export default function ServiceCategory({ category, index }: Props) {
       <div className={`grid items-stretch md:grid-cols-2 ${reversed ? "md:[direction:rtl]" : ""}`}>
         {/* Media panel */}
         <div className="relative min-h-[240px] overflow-hidden md:min-h-[420px] md:[direction:ltr]">
-          {category.image ? (
+          {media ? (
             <img
-              src={category.image}
+              src={media}
               alt={`${category.title} industrial service environment`}
               loading="lazy"
               decoding="async"
