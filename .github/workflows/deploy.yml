@@ -25,17 +25,23 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Deploy to icdsoft via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          # icdsoft inahitaji FTP juu ya TLS (explicit FTPS) — vinginevyo data socket inakatika (ECONNRESET)
-          protocol: ftps
-          # Web root ya domain kwenye icdsoft. Thibitisha kwenye File Manager.
-          # Kawaida ni /www/  au  /public_html/  — weka kama secret FTP_REMOTE_DIR.
-          server-dir: ${{ secrets.FTP_REMOTE_DIR }}
-          local-dir: ./dist/
-          # Zuia kufuta faili nyingine zilizopo kwenye seva ambazo si za hii repo
-          dangerous-clean-slate: false
+      # lftp ni madhubuti zaidi kuliko basic-ftp kwa FTPS dhidi ya icdsoft
+      # (inashughulikia TLS session reuse, hivyo hakuna ECONNRESET kwenye data socket).
+      - name: Deploy to icdsoft via lftp (FTPS)
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+          FTP_REMOTE_DIR: ${{ secrets.FTP_REMOTE_DIR }}
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y lftp
+          lftp -u "$FTP_USERNAME","$FTP_PASSWORD" "$FTP_SERVER" -e "
+            set ftp:ssl-force true;
+            set ftp:ssl-protect-data true;
+            set ssl:verify-certificate no;
+            set ftp:passive-mode true;
+            set net:max-retries 3;
+            set net:timeout 15;
+            mirror --reverse --verbose --parallel=2 ./dist/ '$FTP_REMOTE_DIR';
+            bye
+          "
