@@ -4,10 +4,38 @@
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
+
+  # ---- Canonical URL redirects ----
+  # NOTE: WASHA hizi MBILI tu BAADA ya kuwasha SSL kwenye icdsoft.
+  # Zikiwashwa kabla ya SSL, tovuti itakwama kwenye redirect loop.
+  #
+  # # Force HTTPS
+  # RewriteCond %{HTTPS} off
+  # RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+  #
+  # # Force non-www (brillore.co.tz, si www.brillore.co.tz)
+  # RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  # RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
+
+  # ---- SPA fallback for React Router ----
   RewriteRule ^index\.html$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule . /index.html [L]
+</IfModule>
+
+# ---- Security headers ----
+<IfModule mod_headers.c>
+  # Zuia tovuti kuingizwa kwenye iframe ya mtu mwingine (clickjacking)
+  Header always set X-Frame-Options "SAMEORIGIN"
+  # Zuia browser kubahatisha MIME type (drive-by attacks)
+  Header always set X-Content-Type-Options "nosniff"
+  # Usivuje URL kamili kwa tovuti za nje
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  # Zima APIs zisizohitajika
+  Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+  # HSTS — WASHA tu BAADA ya SSL kufanya kazi (huambia browser itumie HTTPS daima)
+  # Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
 </IfModule>
 
 # ---- Performance: long-cache hashed assets ----

@@ -15,16 +15,40 @@ function ScrollToTop() {
   return null;
 }
 
-/** Updates document.title per route for SEO. */
+/** Updates document.title and meta description per route for SEO. */
 function usePageTitle() {
   const { pathname } = useLocation();
   useEffect(() => {
-    const titles: Record<string, string> = {
-      "/": "Brillore Holdings | Precision. Compliance. Reliability.",
-      "/services": "Services | Brillore Holdings",
-      "/contact": "Contact | Brillore Holdings",
+    const meta: Record<string, { title: string; description: string }> = {
+      "/": {
+        title: "Brillore Holdings | Precision. Compliance. Reliability.",
+        description:
+          "Brillore Holdings provides reliable metrology, inspection, fire safety, and marine technical support services for oil, gas, industrial, and marine operations in Tanzania.",
+      },
+      "/services": {
+        title: "Services | Brillore Holdings",
+        description:
+          "Explore Brillore Holdings' services: oil & gas measurement, inspection and verification, fire safety systems, and marine technical support across Tanzania.",
+      },
+      "/contact": {
+        title: "Contact | Brillore Holdings",
+        description:
+          "Get in touch with Brillore Holdings in Dar es Salaam for metrology, inspection, fire safety, and marine technical support. Call, email, or send an inquiry.",
+      },
     };
-    document.title = titles[pathname] ?? "Brillore Holdings";
+    const current = meta[pathname] ?? {
+      title: "Brillore Holdings",
+      description:
+        "Brillore Holdings provides reliable metrology, inspection, fire safety, and marine technical support services in Tanzania.",
+    };
+    document.title = current.title;
+    let tag = document.querySelector('meta[name="description"]');
+    if (!tag) {
+      tag = document.createElement("meta");
+      tag.setAttribute("name", "description");
+      document.head.appendChild(tag);
+    }
+    tag.setAttribute("content", current.description);
   }, [pathname]);
 }
 
