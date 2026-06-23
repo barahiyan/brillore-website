@@ -18,10 +18,12 @@ export default function Logo({ className = "h-10 w-10", glow = false }: LogoProp
         />
       )}
       <img
-        src="./assets/logo/brilore-logo.png"
+        src="./assets/logo/brilore-logo-ui.png"
         alt="Brillore Holdings logo"
         className="relative h-full w-full object-contain drop-shadow-[0_4px_12px_rgba(214,168,79,0.2)]"
         decoding="async"
+        width="384"
+        height="384"
       />
     </span>
   );

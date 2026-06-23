@@ -93,6 +93,13 @@
     text-wrap: pretty;
   }
 
+  /* Let the browser skip paint work for below-the-fold sections until needed.
+     The hero remains fully rendered so first paint keeps the designed impact. */
+  main > section:not(:first-child) {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 760px;
+  }
+
   /* Visible keyboard focus for accessibility */
   :focus-visible {
     outline: 2px solid #d6a84f;
@@ -266,7 +273,7 @@
 
 /* In light mode the dark industrial photos are dampened so they read as a
    faint texture on warm paper instead of muddy grey blocks. */
-.light .bg-photo { opacity: 0.055; }
+.light .bg-photo { opacity: 0.12; }
 /* Daylight imagery stays present; localized paper scrims protect the copy. */
 .light .hero-footage { opacity: 0.74; }
 

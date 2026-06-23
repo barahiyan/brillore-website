@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
@@ -25,7 +25,7 @@ const headlineLines: Word[][] = [
 const ease = [0.22, 1, 0.36, 1] as const;
 
 const lineReveal = {
-  hidden: { opacity: 0, y: 30, filter: "blur(8px)" },
+  hidden: { opacity: 0, y: 30, filter: "blur(6px)" },
   show: (i: number) => ({
     opacity: 1,
     y: 0,
@@ -54,9 +54,44 @@ const stats: Stat[] = [
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const reduce = useReducedMotion();
   const { theme } = useTheme();
   const light = theme === "light";
+  const [showVideo, setShowVideo] = useState(false);
+
+  useEffect(() => {
+    if (reduce || !HERO_VIDEO_BASENAME) return;
+
+    let cancelled = false;
+    let timeout = 0;
+    const idle = window.requestIdleCallback;
+    const cancelIdle = window.cancelIdleCallback;
+    const loadVideo = () => {
+      if (!cancelled) setShowVideo(true);
+    };
+
+    if (idle) {
+      const id = idle(loadVideo, { timeout: 1600 });
+      return () => {
+        cancelled = true;
+        cancelIdle?.(id);
+      };
+    }
+
+    timeout = window.setTimeout(loadVideo, 900);
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timeout);
+    };
+  }, [reduce]);
+
+  useEffect(() => {
+    if (!showVideo) return;
+    videoRef.current?.play().catch(() => {
+      // Muted autoplay can still be denied in some embedded browsers.
+    });
+  }, [showVideo]);
 
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const bgY = useTransform(scrollYProgress, [0, 1], ["0%", reduce ? "0%" : "16%"]);
@@ -73,13 +108,15 @@ export default function Hero() {
           {/* Cinematic video background + parallax still fallback, on both themes.
               Footage opacity is dialed down on the light theme (see globals
               `.light .hero-footage`) so the warm-paper scrim keeps the copy crisp. */}
-          {HERO_VIDEO_BASENAME ? (
+          {HERO_VIDEO_BASENAME && showVideo ? (
             <video
-              className="hero-footage absolute inset-0 hidden h-full w-full object-cover opacity-[0.62] md:block"
+              ref={videoRef}
+              className="hero-footage absolute inset-0 h-full w-full object-cover opacity-[0.62]"
               autoPlay
               muted
               loop
               playsInline
+              preload="metadata"
               poster={light ? "./assets/images/hero-terminal-day.webp" : "./assets/images/hero-terminal.webp"}
               style={{
                 maskImage: "linear-gradient(90deg,transparent,#000 40%,#000 100%)",
@@ -95,13 +132,15 @@ export default function Hero() {
             src={light ? "./assets/images/hero-terminal-day.webp" : "./assets/images/hero-terminal.webp"}
             alt=""
             className={`hero-footage absolute inset-0 h-full w-full object-cover opacity-[0.55] ${
-              HERO_VIDEO_BASENAME ? "md:hidden" : ""
+              HERO_VIDEO_BASENAME && showVideo ? "hidden" : ""
             }`}
             style={{
               maskImage: "linear-gradient(90deg,transparent 2%,#000 44%,#000 100%)",
               WebkitMaskImage: "linear-gradient(90deg,transparent 2%,#000 44%,#000 100%)",
             }}
             decoding="async"
+            fetchPriority="high"
+            loading="eager"
           />
         </motion.div>
 

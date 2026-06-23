@@ -13,9 +13,9 @@ export default function Layout() {
     ? "./assets/images/hero-terminal.webp"
     : "./assets/images/hero-terminal-day.webp";
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="relative isolate flex min-h-screen flex-col">
       {/* Persistent cinematic backdrop carrying the imagery through the whole page. */}
-      <div aria-hidden className="pointer-events-none fixed inset-0 -z-10">
+      <div aria-hidden className="pointer-events-none fixed inset-0 z-0">
         <img
           src={backdrop}
           alt=""
@@ -24,12 +24,12 @@ export default function Layout() {
         />
         {/* Atmospheric wash (matte black on dark, warm paper on light) so content
             stays readable while the image shows through as you scroll. */}
-        <div className={`absolute inset-0 ${dark ? "bg-ink-900/25" : "bg-[#F5F1E9]/70"}`} />
+        <div className={`absolute inset-0 ${dark ? "bg-ink-900/25" : "bg-[#F5F1E9]/52"}`} />
         <div
           className={`absolute inset-0 ${
             dark
               ? "bg-gradient-to-b from-ink-900/40 via-transparent to-ink-900/70"
-              : "bg-gradient-to-b from-[#F5F1E9]/65 via-[#F5F1E9]/80 to-[#F5F1E9]"
+              : "bg-gradient-to-b from-[#F5F1E9]/48 via-[#F5F1E9]/62 to-[#F5F1E9]/88"
           }`}
         />
       </div>
@@ -41,10 +41,12 @@ export default function Layout() {
         Skip to content
       </a>
       <Header />
-      <main id="main" className="flex-1">
+      <main id="main" className="relative z-10 flex-1">
         <Outlet />
       </main>
-      <Footer />
+      <div className="relative z-10">
+        <Footer />
+      </div>
       <WhatsAppButton />
     </div>
   );
