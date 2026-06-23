@@ -273,7 +273,7 @@
 
 /* In light mode the dark industrial photos are dampened so they read as a
    faint texture on warm paper instead of muddy grey blocks. */
-.light .bg-photo { opacity: 0.12; }
+.light .bg-photo { opacity: 0.075; }
 /* Daylight imagery stays present; localized paper scrims protect the copy. */
 .light .hero-footage { opacity: 0.74; }
 

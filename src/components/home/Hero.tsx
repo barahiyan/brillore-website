@@ -63,6 +63,9 @@ export default function Hero() {
   useEffect(() => {
     if (reduce || !HERO_VIDEO_BASENAME) return;
 
+    const desktop = window.matchMedia("(min-width: 768px)");
+    if (!desktop.matches) return;
+
     let cancelled = false;
     let timeout = 0;
     const idle = window.requestIdleCallback;
@@ -111,7 +114,7 @@ export default function Hero() {
           {HERO_VIDEO_BASENAME && showVideo ? (
             <video
               ref={videoRef}
-              className="hero-footage absolute inset-0 h-full w-full object-cover opacity-[0.62]"
+              className="hero-footage absolute inset-0 hidden h-full w-full object-cover opacity-[0.62] md:block"
               autoPlay
               muted
               loop
@@ -132,7 +135,7 @@ export default function Hero() {
             src={light ? "./assets/images/hero-terminal-day.webp" : "./assets/images/hero-terminal.webp"}
             alt=""
             className={`hero-footage absolute inset-0 h-full w-full object-cover opacity-[0.55] ${
-              HERO_VIDEO_BASENAME && showVideo ? "hidden" : ""
+              HERO_VIDEO_BASENAME && showVideo ? "md:hidden" : ""
             }`}
             style={{
               maskImage: "linear-gradient(90deg,transparent 2%,#000 44%,#000 100%)",
@@ -161,7 +164,7 @@ export default function Hero() {
           </>
         )}
         {/* Mobile has no left/right split, so wash the photo for readability */}
-        <div className={`absolute inset-0 md:hidden ${light ? "bg-[#F5F1E9]/35" : "bg-ink-900/40"}`} />
+        <div className={`absolute inset-0 md:hidden ${light ? "bg-[#F5F1E9]/38" : "bg-ink-900/40"}`} />
         <div className="absolute right-0 top-0 h-[560px] w-[560px] translate-x-1/3 rounded-full bg-radial-gold opacity-30 blur-2xl" />
 
         {/* Soft gold light sweep */}

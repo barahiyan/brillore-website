@@ -24,12 +24,12 @@ export default function Layout() {
         />
         {/* Atmospheric wash (matte black on dark, warm paper on light) so content
             stays readable while the image shows through as you scroll. */}
-        <div className={`absolute inset-0 ${dark ? "bg-ink-900/25" : "bg-[#F5F1E9]/52"}`} />
+        <div className={`absolute inset-0 ${dark ? "bg-ink-900/25" : "bg-[#F5F1E9]/68"}`} />
         <div
           className={`absolute inset-0 ${
             dark
               ? "bg-gradient-to-b from-ink-900/40 via-transparent to-ink-900/70"
-              : "bg-gradient-to-b from-[#F5F1E9]/48 via-[#F5F1E9]/62 to-[#F5F1E9]/88"
+              : "bg-gradient-to-b from-[#F5F1E9]/64 via-[#F5F1E9]/78 to-[#F5F1E9]/94"
           }`}
         />
       </div>
